@@ -68,14 +68,3 @@ main
 - [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC2-InchEquality/src)
 
 ---
-
----
-
-# 👨‍💻 Developed By
-
-**Arvind Kumar**  
-Java Full Stack Trainee  
-
----
-
-> 🚀 From basic equality to scalable quantity system — built step by step using clean engineering practices.
