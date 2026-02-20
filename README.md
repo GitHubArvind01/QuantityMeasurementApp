@@ -68,3 +68,19 @@ main
 - [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC2-InchEquality/src)
 
 ---
+
+## 📅 19 Feb 2026  
+### 🔹 UC3 – Generic Quantity Class (DRY Principle)  
+**Branch:** `feature/UC3-GenericLength`
+
+### 🎯 Objective
+- Remove duplication  
+- Introduce reusable `Quantity` class  
+- Apply DRY principle  
+
+### ✅ Implementation
+- Centralized conversion logic  
+- Removed unit-specific duplication  
+- Improved abstraction  
+
+---
