@@ -30,21 +30,20 @@ main
       ├── feature/UC6-Addition-Of-Two-Length-Units
       └── feature/UC7-Addition-With-Target-Unit-Specification
 ```
-
 ---
 
-## 📅 18 Feb 2026  
-### 🔹 UC2 – Feet and Inches Measurement Equality  
-**Branch:** `feature/UC2-InchEquality`
+## 📅 19 Feb 2026  
+### 🔹 UC3 – Generic Quantity Class (DRY Principle)  
+**Branch:** `feature/UC3-GenericQuantityClassForDRYPrinciple`
 
 ### 🎯 Objective
-- Compare Feet and Inches  
-- Ensure 12 inches = 1 foot  
+- Remove duplication  
+- Introduce reusable `Quantity` class  
+- Apply DRY principle  
 
 ### ✅ Implementation
-- Introduced conversion logic  
-- Implemented base unit comparison  
-- Improved equality handling  
-- [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC2-InchEquality/src)
+- Centralized conversion logic  
+- Removed unit-specific duplication  
+- Improved abstraction  
 
 ---
