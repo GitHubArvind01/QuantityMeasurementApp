@@ -1,10 +1,10 @@
 package com.apps.quantitymeasurementapp;
 
-public class Feet {
+public class FeetEquality {
 
 	private final double value;
 	
-	public Feet(Double value) {
+	public FeetEquality(Double value) {
 		if(Double.isNaN(value)) {
 			throw new IllegalArgumentException("Invalid input!");
 		}
@@ -22,6 +22,6 @@ public class Feet {
 		if(obj==null || obj.getClass()!=this.getClass()) {
 			return false;
 		}
-		return Double.compare(this.value, ((Feet)obj).getValue())==0;
+		return Double.compare(this.value, ((FeetEquality)obj).getValue())==0;
 	}
 }
