@@ -84,3 +84,20 @@ main
 - Improved abstraction  
 
 ---
+
+---
+
+## 📅 20 Feb 2026  
+### 🔹 UC4 – Extended Unit Support  
+**Branch:** `feature/UC4-YardEquality`
+
+### 🎯 Objective
+- Support additional units (Yard, etc.)  
+- Make system scalable  
+
+### ✅ Implementation
+- Introduced Unit Enum  
+- Base unit conversion mapping  
+- Easily extensible structure  
+
+---
