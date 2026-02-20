@@ -1,4 +1,5 @@
 package com.apps.quantitymeasurementapp;
+import com.apps.quantitymeasurementapp.QuantityMeasurementApp.FeetEquality;
 
 import static org.junit.jupiter.api.Assertions.*;
 
