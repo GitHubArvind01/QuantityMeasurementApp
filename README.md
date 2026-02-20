@@ -34,7 +34,7 @@ main
 
 ## 📅 19 Feb 2026  
 ### 🔹 UC3 – Generic Quantity Class (DRY Principle)  
-**Branch:** `feature/UC3-GenericQuantityClassForDRYPrinciple`
+**Branch:** `feature/UC3-GenericLength`
 
 ### 🎯 Objective
 - Remove duplication  
