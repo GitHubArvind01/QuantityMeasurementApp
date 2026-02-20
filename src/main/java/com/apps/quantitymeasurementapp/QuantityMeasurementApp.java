@@ -85,6 +85,21 @@ public class QuantityMeasurementApp {
 		domonstrateInchEquality();
 		
 		domonstrateFeetInchComparison();
+		
+		//Domonstrate Feet to Inches
 		System.out.println(domonstrateLengthEquality(new Length(1,Length.LengthUnit.FEET), new Length(12,Length.LengthUnit.INCHES)));
+		
+		
+		//Domonstrate Yard to Inch
+		System.out.println(domonstrateLengthEquality(new Length(1.0,Length.LengthUnit.YARD), new Length(36.0,Length.LengthUnit.INCHES)));
+		
+		//Domonstrate Centimeter to Inch
+		System.out.println(domonstrateLengthEquality(new Length(100.0,Length.LengthUnit.CENTIMETERS), new Length(39.37,Length.LengthUnit.INCHES)));
+		
+		//Domonstrate Feet to Yard
+		System.out.println(domonstrateLengthEquality(new Length(3.0,Length.LengthUnit.FEET), new Length(1.0,Length.LengthUnit.YARD)));
+		
+		//Domonstrate Centimeter to feet
+		System.out.println(domonstrateLengthEquality(new Length(30.48,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.FEET)));
 	}
 }

@@ -3,10 +3,13 @@ package com.apps.quantitymeasurementapp;
 public class Length {
 	private double value;
 	private LengthUnit len;
+	private static final double EPSILON = 0.01;
 	
 	public enum LengthUnit{
 		FEET(12.0),
-		INCHES(1.0);
+		INCHES(1.0),
+		YARD(36.0),
+		CENTIMETERS(0.393701);
 		
 		private double conversion;
 		
@@ -27,12 +30,12 @@ public class Length {
 		this.len = len;
 	}
 	
-	private double toInches() {
-		return this.value*this.len.getConversion();
+	private double ConvertToBaseUnit() {
+		return ((this.value*this.len.getConversion())*100.0)/100.0;
 	}
 	
 	public boolean compare(Length len) {
-		return Double.compare(this.toInches(), len.toInches())==0;
+		return Math.abs(this.ConvertToBaseUnit() - len.ConvertToBaseUnit()) < EPSILON;
 	}
 	
 	@Override
@@ -52,5 +55,13 @@ public class Length {
 		Length len1 = new Length(1,Length.LengthUnit.INCHES);
 		Length len2 = new Length(1,Length.LengthUnit.INCHES);
 		System.out.println(len1.equals(len2));
+		
+		Length len3 = new Length(1.0,Length.LengthUnit.YARD);
+		Length len4 = new Length(36.0,Length.LengthUnit.INCHES);
+		System.out.println(len3.equals(len4));
+		
+		Length len5 = new Length(100.0,Length.LengthUnit.CENTIMETERS);
+		Length len6 = new Length(39.37,Length.LengthUnit.INCHES);
+		System.out.println(len5.equals(len6));
 	}
 }

@@ -115,4 +115,76 @@ class QuantityMeasurementMainTest {
 		len2 = new Length(feet*12,Length.LengthUnit.INCHES);
 		assertTrue(len1.equals(len1));
 	}
+	
+	//Yard
+	
+	@Test
+	public void yardEquals36Inches() {
+		assertTrue(new Length(1.0, Length.LengthUnit.YARD).equals(new Length(36.0,Length.LengthUnit.INCHES)));
+	}
+
+	@Test
+	public void centimeterEquals39Point3701Inches() {
+		assertTrue(new Length(100.0, Length.LengthUnit.CENTIMETERS).equals(new Length(39.37,Length.LengthUnit.INCHES)));
+	}
+
+	@Test
+	public void threeFeetEqualsOneYard() {
+		assertTrue(new Length(3.0, Length.LengthUnit.FEET).equals(new Length(1.0,Length.LengthUnit.YARD)));		
+	}
+
+	@Test
+	public void thirtyPoint48CmEqualsOneFoot() {
+		assertTrue(new Length(30.48, Length.LengthUnit.CENTIMETERS).equals(new Length(1.0,Length.LengthUnit.FEET)));
+	}
+
+	@Test
+	public void yardNotEqualToInches() {
+		assertFalse(new Length(100.0, Length.LengthUnit.YARD).equals(new Length(39.37,Length.LengthUnit.INCHES)));
+	}
+
+	@Test
+	public void referenceEqualitySameObject() {
+		len1 = new Length(1.0, Length.LengthUnit.YARD);
+		len2 = len1;
+		assertTrue(len1.equals(len1));
+	}
+
+	@Test
+	public void equalsReturnsFalseForNull() {
+		len1 = new Length(1.0, Length.LengthUnit.YARD);
+		assertFalse(len1.equals(null));
+	}
+
+	@Test
+	public void reflexiveSymmetricAndTransitiveProperty() {
+		Length a = new Length(1.0, Length.LengthUnit.YARD);
+	    Length b = new Length(3.0, Length.LengthUnit.FEET);
+	    Length c = new Length(36.0, Length.LengthUnit.INCHES);
+	    
+		// Reflexive
+	    assertTrue(a.equals(a));
+	
+	    // Symmetric
+	    assertTrue(a.equals(b));
+	    assertTrue(b.equals(a));
+	
+	    // Transitive
+	    assertTrue(a.equals(b));
+	    assertTrue(b.equals(c));
+	    assertTrue(a.equals(c));
+	}
+
+	@Test
+	public void differentValuesSameUnitNotEqual() {
+		assertFalse(new Length(10.5,Length.LengthUnit.FEET).equals(new Length(123.2, Length.LengthUnit.FEET)));
+	}
+
+	@Test
+	public void crossUnitEqualityDemonstrateMethod() {
+		Length yard = new Length(1.0, Length.LengthUnit.YARD);
+	    Length inch = new Length(36.0, Length.LengthUnit.INCHES);
+
+	    assertTrue(yard.equals(inch));
+	}
 }
