@@ -17,19 +17,16 @@ This project was implemented incrementally using:
 
 ---
 
----
-
 ## 📅 20 Feb 2026  
-### 🔹 UC4 – Extended Unit Support  
-**Branch:** `feature/UC4-YardEquality`
+### 🔹 UC5 – Unit-to-Unit Conversion  
+**Branch:** `feature/UC5-UnitConversion`
 
 ### 🎯 Objective
-- Support additional units (Yard, etc.)  
-- Make system scalable  
+- Convert one unit into another  
 
 ### ✅ Implementation
-- Introduced Unit Enum  
-- Base unit conversion mapping  
-- Easily extensible structure  
+- Implemented `convertTo()` method  
+- Centralized conversion logic  
+- Ensured precision-safe calculations  
 
 ---
