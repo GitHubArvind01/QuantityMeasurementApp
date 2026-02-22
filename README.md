@@ -33,8 +33,6 @@ main
 
 ---
 
----
-
 ## 📅 17 Feb 2026  
 ### 🔹 UC1 – Feet Measurement Equality  
 **Branch:** `feature/UC1-FeetEquality`
@@ -49,7 +47,7 @@ main
 - Implemented equality logic  
 - Handled null and type safety  
 - Wrote JUnit 5 test cases  
-- [feature/UC1-FeetEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC1-FeetEquality/src)
+- [feature/UC1-FeetEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC1-FeetEquality/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -65,7 +63,7 @@ main
 - Introduced conversion logic  
 - Implemented base unit comparison  
 - Improved equality handling  
-- [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC2-InchEquality/src)
+- [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-InchEquality/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -82,8 +80,7 @@ main
 - Centralized conversion logic  
 - Removed unit-specific duplication  
 - Improved abstraction  
-
----
+- [feature/UC3-GenericLength](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-GenericLength/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -99,5 +96,86 @@ main
 - Introduced Unit Enum  
 - Base unit conversion mapping  
 - Easily extensible structure  
+- [feature/UC4-YardEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-YardEquality/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 20 Feb 2026  
+### 🔹 UC5 – Unit-to-Unit Conversion  
+**Branch:** `feature/UC5-UnitConversoion`
+
+### 🎯 Objective
+- Convert one unit into another  
+
+### ✅ Implementation
+- Implemented `convertTo()` method  
+- Centralized conversion logic  
+- Ensured precision-safe calculations  
+- [feature/UC5-UnitConversion](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-UnitConversoion/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 20 Feb 2026  
+### 🔹 UC6 – Addition of Two Length Units  
+**Branch:** `feature/UC6-UnitAddition`
+
+### 🎯 Objective
+- Add two quantities correctly  
+
+### ✅ Implementation
+- Converted to base unit before addition  
+- Accurate arithmetic operations  
+- Clean and reusable method structure  
+- [feature/UC5-UnitAddition](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-UnitAddition/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 20 Feb 2026  
+### 🔹 UC7 – Addition with Target Unit Specification  
+**Branch:** `feature/UC7-TargetUnitAddition`
+
+### 🎯 Objective
+- Add two quantities  
+- Return result in specified target unit  
+
+### ✅ Implementation
+- Implemented `add(quantity, targetUnit)`  
+- Converted result before returning  
+- Maintained precision and scalability  
+- [feature/UC5-TargetUnitAddition](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-TargetUnitAddition/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 21 Feb 2026  
+### 🔹 UC8 – Refactoring Unit Enum to Standalone  
+**Branch:** `feature/UC8-StandaloneUnit`
+
+### 🎯 Objective
+- Separate Unit enum from Quantity class  
+- Improve modularity  
+- Enable multi-category support  
+
+### ✅ Implementation
+- Moved Unit enum to standalone file  
+- Improved separation of concerns  
+- Increased flexibility for new categories  
+- [feature/UC5-StandaloneUnit](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 21 Feb 2026  
+### 🔹 UC9 – Weight Measurement  
+**Branch:** `feature/UC9-WeightMeasurement`
+
+### 🎯 Objective
+- Extend application to support Weight category  
+- Maintain clean architecture  
+
+### ✅ Implementation
+- Introduced Weight units (Gram, Kilogram, etc.)  
+- Implemented base unit conversion  
+- Ensured category-safe equality  
+- Prevented cross-category comparison (Length ≠ Weight)  
+- [feature/UC5-WeightMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
