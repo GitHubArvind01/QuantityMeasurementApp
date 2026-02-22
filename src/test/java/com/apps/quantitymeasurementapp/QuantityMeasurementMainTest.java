@@ -1,4 +1,5 @@
 package com.apps.quantitymeasurementapp;
+import com.apps.quantitymeasurementapp.Length.LengthUnit;
 import com.apps.quantitymeasurementapp.QuantityMeasurementApp.FeetEquality; 
 import com.apps.quantitymeasurementapp.QuantityMeasurementApp.InchEquality;
 
@@ -186,5 +187,20 @@ class QuantityMeasurementMainTest {
 	    Length inch = new Length(36.0, Length.LengthUnit.INCHES);
 
 	    assertTrue(yard.equals(inch));
+	}
+	
+	@Test
+	public void convertFeetToInches() throws InvalidUnitMeasurementException {
+		Length lengthInches = QuantityMeasurementApp.demonstrateLengthConversion(3.0, LengthUnit.FEET, LengthUnit.INCHES);
+		Length expectedInches = new Length(36.0,Length.LengthUnit.INCHES);
+		assertTrue(QuantityMeasurementApp.demonstrateLengthEquality(lengthInches, expectedInches));
+	}
+	
+	@Test
+	public void convertYardToInchesUsingOverloadMethod() throws InvalidUnitMeasurementException {
+		Length lengthInYard = new Length(2.0, Length.LengthUnit.YARD);
+		Length lengthInInches = QuantityMeasurementApp.demonstrateLengthConversion(lengthInYard, LengthUnit.INCHES);
+		Length expected = new Length(72.0,Length.LengthUnit.INCHES);
+		assertTrue(QuantityMeasurementApp.demonstrateLengthEquality(lengthInInches, expected));
 	}
 }

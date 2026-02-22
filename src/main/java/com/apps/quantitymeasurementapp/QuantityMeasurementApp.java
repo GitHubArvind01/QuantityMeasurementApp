@@ -1,5 +1,7 @@
 package com.apps.quantitymeasurementapp;
 
+import com.apps.quantitymeasurementapp.Length.LengthUnit;
+
 public class QuantityMeasurementApp {
 	
 
@@ -49,22 +51,23 @@ public class QuantityMeasurementApp {
 		}
 	}
 	
-	public static boolean domonstrateInchEquality() {
+	public static boolean demonstrateInchEquality() {
 		InchEquality inch1 = new InchEquality(23.2);
 		InchEquality inch2 = new InchEquality(23.2);
 		return inch1.equals(inch2);
 	}
-	public static boolean domonstrateFeetEquality() {
+	
+	public static boolean demonstrateFeetEquality() {
 		FeetEquality feet1 = new FeetEquality(34.2);
 		FeetEquality feet2 = new FeetEquality(34.2);
 		return feet1.equals(feet2);
 	}
-	
-	public static boolean domonstrateLengthEquality(Length l1, Length l2) {
+						//demonstrateLength
+	public static boolean demonstrateLengthEquality(Length l1, Length l2) {
 		return l1.equals(l2);
 	}
 	
-	public static void domonstrateFeetInchComparison() {
+	public static void demonstrateFeetInchComparison() {
 		Length oneFeet = new Length(1,Length.LengthUnit.FEET);
 		Length twelveInches = new Length(12,Length.LengthUnit.INCHES);
 		System.out.println("1 Feet = 12 Inches: "+oneFeet.equals(twelveInches));
@@ -80,26 +83,57 @@ public class QuantityMeasurementApp {
         System.out.println("1 Inch == 1 Foot : " + oneInch.equals(oneFootAgain));
 	}
 	
-	public static void main(String[] args) {
-		domonstrateFeetEquality();
-		domonstrateInchEquality();
+	public static Length demonstrateLengthConversion(Length l1, Length.LengthUnit unit) throws InvalidUnitMeasurementException{
+		l1 = l1.convertTo(unit);
+		return l1;
+	}
+	
+	public static Length demonstrateLengthConversion(Double val, LengthUnit unit1, LengthUnit unit2) throws InvalidUnitMeasurementException{
+		if(val==null) {
+			throw new InvalidUnitMeasurementException("Value null!");
+		}
+		Length result = new Length(val,unit1);
+		return result.convertTo(unit2);
+	}
+	
+	public static boolean demonstrateLengthComparison(Length l1, Length l2) {
+		return l1.compare(l2);
+	}
+	
+	
+	
+	
+	public static void main(String[] args) throws InvalidUnitMeasurementException {
+		demonstrateFeetEquality();
+		demonstrateInchEquality();
 		
-		domonstrateFeetInchComparison();
+		demonstrateFeetInchComparison();
 		
 		//Domonstrate Feet to Inches
-		System.out.println(domonstrateLengthEquality(new Length(1,Length.LengthUnit.FEET), new Length(12,Length.LengthUnit.INCHES)));
+		System.out.println(demonstrateLengthEquality(new Length(1,Length.LengthUnit.FEET), new Length(12,Length.LengthUnit.INCHES)));
 		
 		
 		//Domonstrate Yard to Inch
-		System.out.println(domonstrateLengthEquality(new Length(1.0,Length.LengthUnit.YARD), new Length(36.0,Length.LengthUnit.INCHES)));
+		System.out.println(demonstrateLengthEquality(new Length(1.0,Length.LengthUnit.YARD), new Length(36.0,Length.LengthUnit.INCHES)));
 		
 		//Domonstrate Centimeter to Inch
-		System.out.println(domonstrateLengthEquality(new Length(100.0,Length.LengthUnit.CENTIMETERS), new Length(39.37,Length.LengthUnit.INCHES)));
+		System.out.println(demonstrateLengthEquality(new Length(100.0,Length.LengthUnit.CENTIMETERS), new Length(39.37,Length.LengthUnit.INCHES)));
 		
 		//Domonstrate Feet to Yard
-		System.out.println(domonstrateLengthEquality(new Length(3.0,Length.LengthUnit.FEET), new Length(1.0,Length.LengthUnit.YARD)));
+		System.out.println(demonstrateLengthEquality(new Length(3.0,Length.LengthUnit.FEET), new Length(1.0,Length.LengthUnit.YARD)));
 		
 		//Domonstrate Centimeter to feet
-		System.out.println(domonstrateLengthEquality(new Length(30.48,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.FEET)));
+		System.out.println(demonstrateLengthEquality(new Length(30.48,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.FEET)));
+		
+		//Input: convert(1.0, FEET, INCHES) → Output: 12.0
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(1.0, Length.LengthUnit.FEET, Length.LengthUnit.INCHES)));
+		//Input: convert(3.0, YARDS, FEET) → Output: 9.0
+		System.out.println("Convert Yard to Feet: "+(demonstrateLengthConversion(3.0, Length.LengthUnit.YARD, Length.LengthUnit.FEET)));
+		//Input: convert(36.0, INCHES, YARDS) → Output: 1.0
+		System.out.println("Convert Inches to Yard: "+(demonstrateLengthConversion(36.0, Length.LengthUnit.INCHES, Length.LengthUnit.YARD)));
+		//Input: convert(1.0, CENTIMETERS, INCHES) → Output: ~0.393701
+		System.out.println("Convert Centimeter to Inches: "+(demonstrateLengthConversion(1.0, Length.LengthUnit.CENTIMETERS, Length.LengthUnit.INCHES)));
+		//Input: convert(0.0, FEET, INCHES) → Output: 0.0
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(0.0, Length.LengthUnit.FEET, Length.LengthUnit.INCHES)));
 	}
 }

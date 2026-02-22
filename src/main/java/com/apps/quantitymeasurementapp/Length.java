@@ -51,6 +51,16 @@ public class Length {
 		return this.compare((Length)obj);
 	}
 	
+	@Override
+	public String toString() {
+		return "Length [value=" + this.value + ", len=" + len + "]";
+	}
+
+	public Length convertTo(LengthUnit unit) {
+		double result = (this.value*len.getConversion())/unit.getConversion();
+		return new Length(result,unit);
+	}
+	
 	public static void main(String args[]) {
 		Length len1 = new Length(1,Length.LengthUnit.INCHES);
 		Length len2 = new Length(1,Length.LengthUnit.INCHES);
