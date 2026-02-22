@@ -1,7 +1,5 @@
 package com.apps.quantitymeasurementapp;
 
-import com.apps.quantitymeasurementapp.Length.LengthUnit;
-
 public class QuantityMeasurementApp {
 	
 
@@ -68,22 +66,22 @@ public class QuantityMeasurementApp {
 	}
 	
 	public static void demonstrateFeetInchComparison() {
-		Length oneFeet = new Length(1,Length.LengthUnit.FEET);
-		Length twelveInches = new Length(12,Length.LengthUnit.INCHES);
+		Length oneFeet = new Length(1,LengthUnit.FEET);
+		Length twelveInches = new Length(12,LengthUnit.INCHES);
 		System.out.println("1 Feet = 12 Inches: "+oneFeet.equals(twelveInches));
 		
 		
-		Length threeFeet = new Length(3,Length.LengthUnit.FEET);
-		Length thirtysixInches = new Length(36,Length.LengthUnit.INCHES);
+		Length threeFeet = new Length(3,LengthUnit.FEET);
+		Length thirtysixInches = new Length(36,LengthUnit.INCHES);
 		System.out.println("3 Feet = 36 Inches: "+threeFeet.equals(thirtysixInches));
 		
-		Length oneInch = new Length(1, Length.LengthUnit.INCHES);
-        Length oneFootAgain = new Length(1, Length.LengthUnit.FEET);
+		Length oneInch = new Length(1, LengthUnit.INCHES);
+        Length oneFootAgain = new Length(1, LengthUnit.FEET);
 
         System.out.println("1 Inch == 1 Foot : " + oneInch.equals(oneFootAgain));
 	}
 	
-	public static Length demonstrateLengthConversion(Length l1, Length.LengthUnit unit) throws InvalidUnitMeasurementException{
+	public static Length demonstrateLengthConversion(Length l1, LengthUnit unit) throws InvalidUnitMeasurementException{
 		l1 = l1.convertTo(unit);
 		return l1;
 	}
@@ -124,89 +122,114 @@ public class QuantityMeasurementApp {
 		demonstrateFeetInchComparison();
 		
 		//Domonstrate Feet to Inches
-		System.out.println(demonstrateLengthEquality(new Length(1,Length.LengthUnit.FEET), new Length(12,Length.LengthUnit.INCHES)));
+		System.out.println(demonstrateLengthEquality(new Length(1,LengthUnit.FEET), new Length(12,LengthUnit.INCHES)));
 		
 		
 		//Domonstrate Yard to Inch
-		System.out.println(demonstrateLengthEquality(new Length(1.0,Length.LengthUnit.YARD), new Length(36.0,Length.LengthUnit.INCHES)));
+		System.out.println(demonstrateLengthEquality(new Length(1.0,LengthUnit.YARD), new Length(36.0,LengthUnit.INCHES)));
 		
 		//Domonstrate Centimeter to Inch
-		System.out.println(demonstrateLengthEquality(new Length(100.0,Length.LengthUnit.CENTIMETERS), new Length(39.37,Length.LengthUnit.INCHES)));
+		System.out.println(demonstrateLengthEquality(new Length(100.0,LengthUnit.CENTIMETERS), new Length(39.37,LengthUnit.INCHES)));
 		
 		//Domonstrate Feet to Yard
-		System.out.println(demonstrateLengthEquality(new Length(3.0,Length.LengthUnit.FEET), new Length(1.0,Length.LengthUnit.YARD)));
+		System.out.println(demonstrateLengthEquality(new Length(3.0,LengthUnit.FEET), new Length(1.0,LengthUnit.YARD)));
 		
 		//Domonstrate Centimeter to feet
-		System.out.println(demonstrateLengthEquality(new Length(30.48,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.FEET)));
+		System.out.println(demonstrateLengthEquality(new Length(30.48,LengthUnit.CENTIMETERS), new Length(1.0,LengthUnit.FEET)));
 		
 		//Input: convert(1.0, FEET, INCHES) → Output: 12.0
-		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(1.0, Length.LengthUnit.FEET, Length.LengthUnit.INCHES)));
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCHES)));
 		//Input: convert(3.0, YARDS, FEET) → Output: 9.0
-		System.out.println("Convert Yard to Feet: "+(demonstrateLengthConversion(3.0, Length.LengthUnit.YARD, Length.LengthUnit.FEET)));
+		System.out.println("Convert Yard to Feet: "+(demonstrateLengthConversion(3.0, LengthUnit.YARD, LengthUnit.FEET)));
 		//Input: convert(36.0, INCHES, YARDS) → Output: 1.0
-		System.out.println("Convert Inches to Yard: "+(demonstrateLengthConversion(36.0, Length.LengthUnit.INCHES, Length.LengthUnit.YARD)));
+		System.out.println("Convert Inches to Yard: "+(demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.YARD)));
 		//Input: convert(1.0, CENTIMETERS, INCHES) → Output: ~0.393701
-		System.out.println("Convert Centimeter to Inches: "+(demonstrateLengthConversion(1.0, Length.LengthUnit.CENTIMETERS, Length.LengthUnit.INCHES)));
+		System.out.println("Convert Centimeter to Inches: "+(demonstrateLengthConversion(1.0, LengthUnit.CENTIMETERS, LengthUnit.INCHES)));
 		//Input: convert(0.0, FEET, INCHES) → Output: 0.0
-		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(0.0, Length.LengthUnit.FEET, Length.LengthUnit.INCHES)));
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(0.0, LengthUnit.FEET, LengthUnit.INCHES)));
 		
 
 		
 		//Input: add(Quantity(1.0, FEET), Quantity(2.0, FEET))
 		//Output: Quantity(3.0, FEET)
-		System.out.println("Add Feet to Feet: "+(convertFromBaseToTargetUnit(new Length(1.0,Length.LengthUnit.FEET), new Length(2.0,Length.LengthUnit.FEET))));
+		System.out.println("Add Feet to Feet: "+(convertFromBaseToTargetUnit(new Length(1.0,LengthUnit.FEET), new Length(2.0,LengthUnit.FEET))));
 
 		//Input: add(Quantity(1.0, FEET), Quantity(12.0, INCHES))
 		//Output: Quantity(2.0, FEET)
-		System.out.println("Add Feet to Inches: "+(convertFromBaseToTargetUnit(new Length(1.0,Length.LengthUnit.FEET), new Length(12.0,Length.LengthUnit.INCHES))));
+		System.out.println("Add Feet to Inches: "+(convertFromBaseToTargetUnit(new Length(1.0,LengthUnit.FEET), new Length(12.0,LengthUnit.INCHES))));
 
 		//Input: add(Quantity(12.0, INCHES), Quantity(1.0, FEET))
 		//Output: Quantity(24.0, INCHES)
-		System.out.println("Add Inches to Feet: "+(convertFromBaseToTargetUnit(new Length(12.0,Length.LengthUnit.INCHES), new Length(1.0,Length.LengthUnit.FEET))));
+		System.out.println("Add Inches to Feet: "+(convertFromBaseToTargetUnit(new Length(12.0,LengthUnit.INCHES), new Length(1.0,LengthUnit.FEET))));
 		
 		//Input: add(Quantity(1.0, YARDS), Quantity(3.0, FEET))
 		//Output: Quantity(2.0, YARDS)
-		System.out.println("Add Yard to Feet: "+(convertFromBaseToTargetUnit(new Length(1.0,Length.LengthUnit.YARD), new Length(3.0,Length.LengthUnit.FEET))));
+		System.out.println("Add Yard to Feet: "+(convertFromBaseToTargetUnit(new Length(1.0,LengthUnit.YARD), new Length(3.0,LengthUnit.FEET))));
 
 		//Input: add(Quantity(36.0, INCHES), Quantity(1.0, YARDS))
 		//Output: Quantity(72.0, INCHES)
-		System.out.println("Add Inches to Yard: "+(convertFromBaseToTargetUnit(new Length(36.0,Length.LengthUnit.INCHES), new Length(2.0,Length.LengthUnit.YARD))));
+		System.out.println("Add Inches to Yard: "+(convertFromBaseToTargetUnit(new Length(36.0,LengthUnit.INCHES), new Length(2.0,LengthUnit.YARD))));
 
 		//Input: add(Quantity(2.54, CENTIMETERS), Quantity(1.0, INCHES))
 		//Output: Quantity(~5.08, CENTIMETERS)
-		System.out.println("Add Centimeter to Inches: "+(convertFromBaseToTargetUnit(new Length(2.54,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.INCHES))));
+		System.out.println("Add Centimeter to Inches: "+(convertFromBaseToTargetUnit(new Length(2.54,LengthUnit.CENTIMETERS), new Length(1.0,LengthUnit.INCHES))));
 
 		//Input: add(Quantity(5.0, FEET), Quantity(0.0, INCHES))
 		//Output: Quantity(5.0, FEET)
-		System.out.println("Add Feet to Inches: "+(convertFromBaseToTargetUnit(new Length(5.0,Length.LengthUnit.FEET), new Length(0.0,Length.LengthUnit.INCHES))));
+		System.out.println("Add Feet to Inches: "+(convertFromBaseToTargetUnit(new Length(5.0,LengthUnit.FEET), new Length(0.0,LengthUnit.INCHES))));
 
 		//Input: add(Quantity(5.0, FEET), Quantity(-2.0, FEET))
 		//Output: Quantity(3.0, FEET)
-		System.out.println("Add Feet to Feet: "+(convertFromBaseToTargetUnit(new Length(5.0,Length.LengthUnit.FEET), new Length(-2.0,Length.LengthUnit.FEET))));
+		System.out.println("Add Feet to Feet: "+(convertFromBaseToTargetUnit(new Length(5.0,LengthUnit.FEET), new Length(-2.0,LengthUnit.FEET))));
 		
 
 		//Input: add(Quantity(1.0, FEET), Quantity(12.0, INCHES), FEET) → Output: Quantity(2.0, FEET)
-		System.out.println("Addition to Feet: "+(demonstrateLengthAddition(new Length(1.0,Length.LengthUnit.FEET), new Length(36.0,Length.LengthUnit.INCHES), Length.LengthUnit.FEET)));
+		System.out.println("Addition to Feet: "+(demonstrateLengthAddition(new Length(1.0,LengthUnit.FEET), new Length(36.0,LengthUnit.INCHES), LengthUnit.FEET)));
 		
 		//Input: add(Quantity(1.0, FEET), Quantity(12.0, INCHES), INCHES) → Output: Quantity(24.0, INCHES)
-		System.out.println("Addition to Inches: "+(demonstrateLengthAddition(new Length(1.0,Length.LengthUnit.FEET), new Length(12.0,Length.LengthUnit.INCHES), Length.LengthUnit.INCHES)));
+		System.out.println("Addition to Inches: "+(demonstrateLengthAddition(new Length(1.0,LengthUnit.FEET), new Length(12.0,LengthUnit.INCHES), LengthUnit.INCHES)));
 
 		//Input: add(Quantity(1.0, FEET), Quantity(12.0, INCHES), YARDS) → Output: Quantity(~0.667, YARDS)
-		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(1.0,Length.LengthUnit.FEET), new Length(12.0,Length.LengthUnit.INCHES), Length.LengthUnit.YARD)));
+		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(1.0,LengthUnit.FEET), new Length(12.0,LengthUnit.INCHES), LengthUnit.YARD)));
 
 		//Input: add(Quantity(1.0, YARDS), Quantity(3.0, FEET), YARDS) → Output: Quantity(2.0, YARDS)
-		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(1.0,Length.LengthUnit.YARD), new Length(3.0,Length.LengthUnit.FEET), Length.LengthUnit.YARD)));
+		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(1.0,LengthUnit.YARD), new Length(3.0,LengthUnit.FEET), LengthUnit.YARD)));
 
 		//Input: add(Quantity(36.0, INCHES), Quantity(1.0, YARDS), FEET) → Output: Quantity(6.0, FEET)
-		System.out.println("Addition to Feet: "+(demonstrateLengthAddition(new Length(36.0,Length.LengthUnit.INCHES), new Length(1.0,Length.LengthUnit.YARD), Length.LengthUnit.FEET)));
+		System.out.println("Addition to Feet: "+(demonstrateLengthAddition(new Length(36.0,LengthUnit.INCHES), new Length(1.0,LengthUnit.YARD), LengthUnit.FEET)));
 
 		//Input: add(Quantity(2.54, CENTIMETERS), Quantity(1.0, INCHES), CENTIMETERS) → Output: Quantity(~5.08, CENTIMETERS)
-		System.out.println("Addition to Centimeters: "+(demonstrateLengthAddition(new Length(2.54,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.INCHES), Length.LengthUnit.CENTIMETERS)));
+		System.out.println("Addition to Centimeters: "+(demonstrateLengthAddition(new Length(2.54,LengthUnit.CENTIMETERS), new Length(1.0,LengthUnit.INCHES), LengthUnit.CENTIMETERS)));
 
 		//Input: add(Quantity(5.0, FEET), Quantity(0.0, INCHES), YARDS) → Output: Quantity(~1.667, YARDS)
-		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(5.0,Length.LengthUnit.FEET), new Length(0.0,Length.LengthUnit.INCHES), Length.LengthUnit.YARD)));
+		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(5.0,LengthUnit.FEET), new Length(0.0,LengthUnit.INCHES), LengthUnit.YARD)));
 
 		//Input: add(Quantity(5.0, FEET), Quantity(-2.0, FEET), INCHES) → Output: Quantity(36.0, INCHES)
-		System.out.println("Addition to Inches: "+(demonstrateLengthAddition(new Length(5.0,Length.LengthUnit.FEET), new Length(-2.0,Length.LengthUnit.INCHES), Length.LengthUnit.INCHES)));
+		System.out.println("Addition to Inches: "+(demonstrateLengthAddition(new Length(5.0,LengthUnit.FEET), new Length(-2.0,LengthUnit.INCHES), LengthUnit.INCHES)));
+		
+		
+		//Input: Quantity(1.0, FEET).convertTo(INCHES) → Output: Quantity(12.0, INCHES)
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.INCHES)));
+		
+		//Input: Quantity(1.0, FEET).add(Quantity(12.0, INCHES), FEET) → Output: Quantity(2.0, FEET)
+		System.out.println("Addition to Feet: "+(demonstrateLengthAddition(new Length(1.0,LengthUnit.FEET), new Length(36.0,LengthUnit.INCHES), LengthUnit.FEET)));
+
+		//Input: Quantity(36.0, INCHES).equals(Quantity(1.0, YARDS)) → Output: true
+		System.out.println("36.0 Inches Equals to 1.0 Yards: "+demonstrateLengthEquality(new Length(36.0,LengthUnit.INCHES), new Length(1.0,LengthUnit.YARD)));
+		
+		//Input: Quantity(1.0, YARDS).add(Quantity(3.0, FEET), YARDS) → Output: Quantity(2.0, YARDS)
+		System.out.println("Addition to Yards: "+(demonstrateLengthAddition(new Length(1.0,LengthUnit.YARD), new Length(3.0,LengthUnit.FEET), LengthUnit.YARD)));
+		
+		//Input: Quantity(2.54, CENTIMETERS).convertTo(INCHES) → Output: Quantity(~1.0, INCHES) (within epsilon)
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(2.54, LengthUnit.CENTIMETERS, LengthUnit.INCHES)));
+
+		//Input: Quantity(5.0, FEET).add(Quantity(0.0, INCHES), FEET) → Output: Quantity(5.0, FEET)
+		System.out.println("Addition to Feets: "+(demonstrateLengthAddition(new Length(5.0,LengthUnit.FEET), new Length(0.0,LengthUnit.INCHES), LengthUnit.FEET)));
+
+		//Input: LengthUnit.FEET.convertToBaseUnit(12.0) → Output: 12.0 (already in base unit)
+		System.out.println("Convert Feet to Feets: "+(demonstrateLengthConversion(1.0, LengthUnit.FEET, LengthUnit.FEET)));
+		
+		//Input: LengthUnit.INCHES.convertToBaseUnit(12.0) → Output: 1.0 (converted to feet)
+		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.FEET)));
 	}
 }
