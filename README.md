@@ -63,7 +63,7 @@ main
 - Introduced conversion logic  
 - Implemented base unit comparison  
 - Improved equality handling  
-- [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-InchEquality/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC2-InchEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC2-InchEquality/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -80,7 +80,7 @@ main
 - Centralized conversion logic  
 - Removed unit-specific duplication  
 - Improved abstraction  
-- [feature/UC3-GenericLength](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-GenericLength/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC3-GenericLength](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC3-GenericLength/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -96,7 +96,7 @@ main
 - Introduced Unit Enum  
 - Base unit conversion mapping  
 - Easily extensible structure  
-- [feature/UC4-YardEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-YardEquality/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC4-YardEquality](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC4-YardEquality/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -126,7 +126,7 @@ main
 - Converted to base unit before addition  
 - Accurate arithmetic operations  
 - Clean and reusable method structure  
-- [feature/UC5-UnitAddition](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-UnitAddition/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC6-UnitAddition](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC6-UnitAddition/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -142,7 +142,7 @@ main
 - Implemented `add(quantity, targetUnit)`  
 - Converted result before returning  
 - Maintained precision and scalability  
-- [feature/UC5-TargetUnitAddition](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-TargetUnitAddition/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC7-TargetUnitAddition](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC7-TargetUnitAddition/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -159,7 +159,7 @@ main
 - Moved Unit enum to standalone file  
 - Improved separation of concerns  
 - Increased flexibility for new categories  
-- [feature/UC5-StandaloneUnit](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC8-StandaloneUnit](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC8-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -176,6 +176,6 @@ main
 - Implemented base unit conversion  
 - Ensured category-safe equality  
 - Prevented cross-category comparison (Length ≠ Weight)  
-- [feature/UC5-WeightMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC9-WeightMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC9-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
