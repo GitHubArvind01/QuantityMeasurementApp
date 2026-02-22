@@ -100,10 +100,16 @@ public class QuantityMeasurementApp {
 		return l1.compare(l2);
 	}
 	
-	
+	public static Length convertFromBaseToTargetUnit(Length l1, Length l2) throws InvalidUnitMeasurementException {
+		if(l1==null || l1 ==null) {
+			throw new InvalidUnitMeasurementException("Null Object!");
+		}
+		return (l1.add(l2));
+	}
 	
 	
 	public static void main(String[] args) throws InvalidUnitMeasurementException {
+
 		demonstrateFeetEquality();
 		demonstrateInchEquality();
 		
@@ -135,5 +141,39 @@ public class QuantityMeasurementApp {
 		System.out.println("Convert Centimeter to Inches: "+(demonstrateLengthConversion(1.0, Length.LengthUnit.CENTIMETERS, Length.LengthUnit.INCHES)));
 		//Input: convert(0.0, FEET, INCHES) → Output: 0.0
 		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(0.0, Length.LengthUnit.FEET, Length.LengthUnit.INCHES)));
+		
+
+		
+		//Input: add(Quantity(1.0, FEET), Quantity(2.0, FEET))
+		//Output: Quantity(3.0, FEET)
+		System.out.println("Add Feet to Feet: "+(convertFromBaseToTargetUnit(new Length(1.0,Length.LengthUnit.FEET), new Length(2.0,Length.LengthUnit.FEET))));
+
+		//Input: add(Quantity(1.0, FEET), Quantity(12.0, INCHES))
+		//Output: Quantity(2.0, FEET)
+		System.out.println("Add Feet to Inches: "+(convertFromBaseToTargetUnit(new Length(1.0,Length.LengthUnit.FEET), new Length(12.0,Length.LengthUnit.INCHES))));
+
+		//Input: add(Quantity(12.0, INCHES), Quantity(1.0, FEET))
+		//Output: Quantity(24.0, INCHES)
+		System.out.println("Add Inches to Feet: "+(convertFromBaseToTargetUnit(new Length(12.0,Length.LengthUnit.INCHES), new Length(1.0,Length.LengthUnit.FEET))));
+		
+		//Input: add(Quantity(1.0, YARDS), Quantity(3.0, FEET))
+		//Output: Quantity(2.0, YARDS)
+		System.out.println("Add Yard to Feet: "+(convertFromBaseToTargetUnit(new Length(1.0,Length.LengthUnit.YARD), new Length(3.0,Length.LengthUnit.FEET))));
+
+		//Input: add(Quantity(36.0, INCHES), Quantity(1.0, YARDS))
+		//Output: Quantity(72.0, INCHES)
+		System.out.println("Add Inches to Yard: "+(convertFromBaseToTargetUnit(new Length(36.0,Length.LengthUnit.INCHES), new Length(2.0,Length.LengthUnit.YARD))));
+
+		//Input: add(Quantity(2.54, CENTIMETERS), Quantity(1.0, INCHES))
+		//Output: Quantity(~5.08, CENTIMETERS)
+		System.out.println("Add Centimeter to Inches: "+(convertFromBaseToTargetUnit(new Length(2.54,Length.LengthUnit.CENTIMETERS), new Length(1.0,Length.LengthUnit.INCHES))));
+
+		//Input: add(Quantity(5.0, FEET), Quantity(0.0, INCHES))
+		//Output: Quantity(5.0, FEET)
+		System.out.println("Add Feet to Inches: "+(convertFromBaseToTargetUnit(new Length(5.0,Length.LengthUnit.FEET), new Length(0.0,Length.LengthUnit.INCHES))));
+
+		//Input: add(Quantity(5.0, FEET), Quantity(-2.0, FEET))
+		//Output: Quantity(3.0, FEET)
+		System.out.println("Add Feet to Feet: "+(convertFromBaseToTargetUnit(new Length(5.0,Length.LengthUnit.FEET), new Length(-2.0,Length.LengthUnit.FEET))));
 	}
 }
