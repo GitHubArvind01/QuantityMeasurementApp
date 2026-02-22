@@ -111,7 +111,7 @@ main
 - Implemented `convertTo()` method  
 - Centralized conversion logic  
 - Ensured precision-safe calculations  
-- [feature/UC5-UnitConversion](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-UnitConversoion/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC5-UnitConversoion](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC5-UnitConversoion/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
 
@@ -176,6 +176,6 @@ main
 - Implemented base unit conversion  
 - Ensured category-safe equality  
 - Prevented cross-category comparison (Length ≠ Weight)  
-- [feature/UC9-WeightMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC9-StandaloneUnit/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC9-WeightMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC9-WeightMeasurement/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
