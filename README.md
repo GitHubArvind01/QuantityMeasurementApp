@@ -17,17 +17,18 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 20 Feb 2026  
-### 🔹 UC7 – Addition with Target Unit Specification  
-**Branch:** `feature/UC7-TargetUnitAddition`
+## 📅 21 Feb 2026  
+### 🔹 UC8 – Refactoring Unit Enum to Standalone  
+**Branch:** `feature/UC8-StandaloneUnit`
 
 ### 🎯 Objective
-- Add two quantities  
-- Return result in specified target unit  
+- Separate Unit enum from Quantity class  
+- Improve modularity  
+- Enable multi-category support  
 
 ### ✅ Implementation
-- Implemented `add(quantity, targetUnit)`  
-- Converted result before returning  
-- Maintained precision and scalability  
+- Moved Unit enum to standalone file  
+- Improved separation of concerns  
+- Increased flexibility for new categories  
 
 ---
