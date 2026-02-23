@@ -18,17 +18,21 @@ This project was implemented incrementally using:
 ---
 
 ## 📅 21 Feb 2026  
-### 🔹 UC9 – Weight Measurement  
-**Branch:** `feature/UC9-WeightMeasurement`
+### 🔹 UC10 – Generic Quantity Class with Unit Interface for Multi-Category Support  
+**Branch:**  `feature/UC10-GenericQuantity`
 
 ### 🎯 Objective
-- Extend application to support Weight category  
-- Maintain clean architecture  
+- Create a fully generic Quantity system  
+- Support multiple measurement categories  
+- Apply interface-based design  
 
 ### ✅ Implementation
-- Introduced Weight units (Gram, Kilogram, etc.)  
-- Implemented base unit conversion  
-- Ensured category-safe equality  
-- Prevented cross-category comparison (Length ≠ Weight)  
+- Introduced `Unit` interface  
+- Implemented category-specific enums (LengthUnit, WeightUnit)  
+- Created Generic `Quantity<T extends Unit>` class  
+- Ensured:
+  - Type-safe unit handling  
+  - Category-safe operations  
+  - Scalable architecture  
 
 ---
