@@ -16,12 +16,8 @@ public class Weight {
 		this.weigthUnit = weigthUnit;
 	}
 	
-	public double convertToBaseUnit() {
-		return ((this.value*this.weigthUnit.getConversion())*100.0)/100.0;
-	}
-	
 	public boolean compare(Weight input) {
-		return Math.abs(this.convertToBaseUnit() - input.convertToBaseUnit())<EPSILON;
+		return Math.abs(this.weigthUnit.convertToBaseUnit(this.value) - input.weigthUnit.convertToBaseUnit(input.value))<EPSILON;
 	}
 	
 	@Override

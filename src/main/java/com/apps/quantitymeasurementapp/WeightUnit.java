@@ -16,4 +16,8 @@ public enum WeightUnit {
 	public double getConversion() {
 		return conversion;
 	}
+	
+	public double convertToBaseUnit(double value) {
+		return ((value*this.getConversion())*100.0)/100.0;
+	}
 }

@@ -15,4 +15,8 @@ public enum LengthUnit{
 	public double getConversion() {
 		return conversion;
 	}
+	
+	public double ConvertToBaseUnit(double value) {
+		return ((value*this.getConversion())*100.0)/100.0;
+	}
 }
