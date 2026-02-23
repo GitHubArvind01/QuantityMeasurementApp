@@ -113,6 +113,32 @@ public class QuantityMeasurementApp {
 		return l1.add(l2, unit);
 	}
 	
+	public static Weight demonstrateWeightAddition(Weight w1, Weight w2) throws InvalidUnitMeasurementException {
+		if(w1==null || w2 ==null) {
+			throw new InvalidUnitMeasurementException("Null Object!");
+		}
+		return (w1.add(w2));
+	}
+	public static Weight demonstrateWeightAddition(Weight w1, Weight w2, WeightUnit unit) throws InvalidUnitMeasurementException {
+		if(w1==null || w2 ==null) {
+			throw new InvalidUnitMeasurementException("Null Object!");
+		}
+		return (w1.add(w2,unit));
+	}
+	
+	public static Weight demonstrateWeightConversion(Weight w1, WeightUnit unit) throws InvalidUnitMeasurementException{
+		w1 = w1.convertTo(unit);
+		return w1;
+	}
+	
+	public static Weight demonstrateWeightConversion(double value, WeightUnit from, WeightUnit to) {
+		return new Weight(value, from).convertTo(to);
+	}
+	
+	public static boolean demonstrateWeightEquality(Weight w1, Weight w2) {
+	    return w1.equals(w2);
+	}
+	
 	
 	public static void main(String[] args) throws InvalidUnitMeasurementException {
 		
@@ -231,5 +257,67 @@ public class QuantityMeasurementApp {
 		
 		//Input: LengthUnit.INCHES.convertToBaseUnit(12.0) → Output: 1.0 (converted to feet)
 		System.out.println("Convert Feet to Inches: "+(demonstrateLengthConversion(36.0, LengthUnit.INCHES, LengthUnit.FEET)));
+		
+		//Input: Weight(1.0, KILOGRAM).equals(Weight(1.0, KILOGRAM)) → Output: true
+		System.out.println("1 KG Equals 1 KG: " +
+		        demonstrateWeightEquality(
+		                new Weight(1.0, WeightUnit.KILOGRAM),
+		                new Weight(1.0, WeightUnit.KILOGRAM)));
+
+		//Input: Weight(1.0, KILOGRAM).equals(Weight(1000.0, GRAM)) → Output: true
+		System.out.println("1 KG Equals 1000 GRAM: " +
+		        demonstrateWeightEquality(
+		                new Weight(1.0, WeightUnit.KILOGRAM),
+		                new Weight(1000.0, WeightUnit.GRAM)));
+
+		//Input: Weight(1.0, KILOGRAM).equals(Weight(2.20462, POUND)) → Output: true (epsilon)
+		System.out.println("1 KG Equals 2.20462 POUND: " +
+		        demonstrateWeightEquality(
+		                new Weight(1.0, WeightUnit.KILOGRAM),
+		                new Weight(2.20462, WeightUnit.POUND)));
+
+		//Input: Weight(500.0, GRAM).equals(Weight(0.5, KILOGRAM)) → Output: true
+		System.out.println("500 GRAM Equals 0.5 KG: " +
+		        demonstrateWeightEquality(
+		                new Weight(500.0, WeightUnit.GRAM),
+		                new Weight(0.5, WeightUnit.KILOGRAM)));
+		
+		//Input: Weight(1.0, KILOGRAM).convertTo(GRAM)
+		System.out.println("Convert KG to GRAM: " +
+		        demonstrateWeightConversion(1.0,
+		                WeightUnit.KILOGRAM,
+		                WeightUnit.GRAM));
+
+		//Input: Weight(2.0, POUND).convertTo(KILOGRAM)
+		System.out.println("Convert POUND to KG: " +
+		        demonstrateWeightConversion(2.0,
+		                WeightUnit.POUND,
+		                WeightUnit.KILOGRAM));
+
+		//Input: Weight(500.0, GRAM).convertTo(POUND)
+		System.out.println("Convert GRAM to POUND: " +
+		        demonstrateWeightConversion(500.0,
+		                WeightUnit.GRAM,
+		                WeightUnit.POUND));
+		
+		//Input: Weight(1.0, KILOGRAM).add(Weight(1000.0, GRAM))
+		System.out.println("Add KG + GRAM: " +
+		        demonstrateWeightAddition(
+		                new Weight(1.0, WeightUnit.KILOGRAM),
+		                new Weight(1000.0, WeightUnit.GRAM)));
+		
+		//Input: Weight(1.0, KILOGRAM).add(Weight(1000.0, GRAM), GRAM)
+		System.out.println("Add to GRAM: " +
+		        demonstrateWeightAddition(
+		                new Weight(1.0, WeightUnit.KILOGRAM),
+		                new Weight(1000.0, WeightUnit.GRAM),
+		                WeightUnit.GRAM));
+
+		//Input: Weight(2.0, KILOGRAM).add(Weight(4.0, POUND), KILOGRAM)
+		System.out.println("Add KG + POUND to KG: " +
+		        demonstrateWeightAddition(
+		                new Weight(2.0, WeightUnit.KILOGRAM),
+			                new Weight(4.0, WeightUnit.POUND),
+			                	WeightUnit.KILOGRAM));
 	}
 }
