@@ -179,3 +179,23 @@ main
 - [feature/UC9-WeightMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC9-WeightMeasurement/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
+
+## 📅 21 Feb 2026  
+### 🔹 UC10 – Generic Quantity Class with Unit Interface for Multi-Category Support  
+**Branch:**  `feature/UC10-GenericQuantity`
+
+### 🎯 Objective
+- Create a fully generic Quantity system  
+- Support multiple measurement categories  
+- Apply interface-based design  
+
+### ✅ Implementation
+- Introduced `Unit` interface  
+- Implemented category-specific enums (LengthUnit, WeightUnit)  
+- Created Generic `Quantity<T extends Unit>` class  
+- Ensured:
+  - Type-safe unit handling  
+  - Category-safe operations  
+  - Scalable architecture  
+
+---
