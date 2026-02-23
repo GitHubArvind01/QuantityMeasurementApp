@@ -17,22 +17,28 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 21 Feb 2026  
-### 🔹 UC10 – Generic Quantity Class with Unit Interface for Multi-Category Support  
-**Branch:**  `feature/UC10-GenericQuantity`
+
+## 📅 22 Feb 2026  
+### 🔹 UC11 – Volume Measurement Equality, Conversion & Addition  
+**Branch:**  `feature/UC11-VolumeMeasurement`
 
 ### 🎯 Objective
-- Create a fully generic Quantity system  
-- Support multiple measurement categories  
-- Apply interface-based design  
+- Introduce Volume measurement category  
+- Support Litre, Millilitre, Gallon  
+- Enable equality, conversion, and addition  
 
 ### ✅ Implementation
-- Introduced `Unit` interface  
-- Implemented category-specific enums (LengthUnit, WeightUnit)  
-- Created Generic `Quantity<T extends Unit>` class  
-- Ensured:
-  - Type-safe unit handling  
-  - Category-safe operations  
-  - Scalable architecture  
+- Created `VolumeUnit` enum  
+- Implemented base unit strategy (Millilitre as base)  
+- Enabled cross-unit comparison (1000 ml = 1 Litre)  
+- Added addition support within category  
+- Prevented cross-category arithmetic  
+
+### 🏗 Result
+System now supports:
+- Length
+- Weight
+- Volume  
+- [feature/UC11-VolumeMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC11-VolumeMeasurement/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
