@@ -24,11 +24,18 @@ main
  └── dev
       ├── feature/UC1-FeetEquality
       ├── feature/UC2-InchEquality
-      ├── feature/UC3-GenericQuantityClassForDRYPrinciple
-      ├── feature/UC4-Extended-Unit-Support
-      ├── feature/UC5-Unit-to-Unit-Conversion
-      ├── feature/UC6-Addition-Of-Two-Length-Units
-      └── feature/UC7-Addition-With-Target-Unit-Specification
+      ├── feature/UC3-GenericLength
+      ├── feature/UC4-YardEquality
+      ├── feature/UC5-UnitConversoion
+      ├── feature/UC6-UnitAddition
+      ├── feature/UC7-TargetUnitAddition
+      ├── feature/UC8-StandaloneUnit
+      ├── feature/UC9-WeightMeasurement
+      ├── feature/UC10-GenericQuantity
+      ├── feature/UC11-VolumeMeasurement
+      ├── feature/UC12-SubtractionAndDivision
+      ├── feature/UC13-CentralizedArithmeticLogic
+      └── feature/UC14-TemperatureMeasurementwithSelectiveArithmetic
 ```
 
 ---
@@ -197,5 +204,110 @@ main
   - Type-safe unit handling  
   - Category-safe operations  
   - Scalable architecture  
+- [feature/UC10-GenericQuantity](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC10-GenericQuantity/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+
+## 📅 22 Feb 2026  
+### 🔹 UC11 – Volume Measurement Equality, Conversion & Addition  
+**Branch:**  `feature/UC11-VolumeMeasurement`
+
+### 🎯 Objective
+- Introduce Volume measurement category  
+- Support Litre, Millilitre, Gallon  
+- Enable equality, conversion, and addition  
+
+### ✅ Implementation
+- Created `VolumeUnit` enum  
+- Implemented base unit strategy (Millilitre as base)  
+- Enabled cross-unit comparison (1000 ml = 1 Litre)  
+- Added addition support within category  
+- Prevented cross-category arithmetic  
+
+### 🏗 Result
+System now supports:
+- Length
+- Weight
+- Volume  
+- [feature/UC11-VolumeMeasurement](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC11-VolumeMeasurement/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 23 Feb 2026  
+### 🔹 UC12 – Subtraction & Division Operations  
+**Branch:**  `feature/UC12-SubtractionAndDivision`
+
+### 🎯 Objective
+- Extend arithmetic support  
+- Enable subtraction between quantities  
+- Support division operations  
+
+### ✅ Implementation
+- Added `subtract()` method  
+- Added `divide()` method  
+- Ensured same-category enforcement  
+- Maintained base unit conversion logic  
+- Precision-safe arithmetic  
+
+### ⚙ Design Principle
+All arithmetic operations follow:
+1. Convert to base unit  
+2. Perform operation  
+3. Convert to target unit  
+- [feature/UC12-SubtractionAndDivision](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC12-SubtractionAndDivision/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 23 Feb 2026  
+### 🔹 UC13 – Centralized Arithmetic Logic (DRY Enforcement)  
+**Branch:**  `feature/UC13-CentralizedArithmeticLogic`
+
+### 🎯 Objective
+- Remove duplication across add, subtract, divide  
+- Centralize arithmetic handling  
+
+### ✅ Implementation
+- Introduced common internal arithmetic handler  
+- Removed repeated conversion code  
+- Improved maintainability  
+- Reduced logic duplication  
+- Strengthened DRY compliance  
+
+### 🧠 Engineering Impact
+- Cleaner architecture  
+- Easier future feature additions  
+- Reduced error-prone code blocks  
+- [feature/UC13-CentralizedArithmeticLogic](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC13-CentralizedArithmeticLogic/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+## 📅 24 Feb 2026  
+### 🔹 UC14 – Temperature Measurement with Selective Arithmetic Support & Measurable Refactoring  
+**Branch:**  `feature/UC14-TemperatureMeasurementwithSelectiveArithmetic`
+
+### 🎯 Objective
+- Add Temperature measurement category  
+- Support Celsius & Fahrenheit  
+- Restrict invalid arithmetic operations  
+- Refactor measurable behavior  
+
+### ⚠ Special Challenge
+Temperature is **not purely linear like length or weight**  
+Conversion requires formula-based transformation:
+- °F = (°C × 9/5) + 32  
+
+### ✅ Implementation
+- Created `TemperatureUnit` enum  
+- Implemented formula-based conversion logic  
+- Allowed equality comparison  
+- Restricted unsupported arithmetic (e.g., adding two temperatures directly)  
+- Applied measurable abstraction refactoring  
+
+### 🧠 Architectural Enhancement
+- Introduced selective arithmetic capability  
+- Improved domain modeling  
+- Applied behavior-driven restrictions  
+- [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
