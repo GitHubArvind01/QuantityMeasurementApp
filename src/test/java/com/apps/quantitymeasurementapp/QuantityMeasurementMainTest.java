@@ -685,126 +685,192 @@ class QuantityMeasurementMainTest<U extends IMeasurable> {
 	
 	@Test
 	public void testAddition_SameUnit_MillilitrePlusMillilitre() throws InvalidUnitMeasurementException {
-		v1 = new Quantity<>(1.0, VolumeUnit.MILLILITRE);
-		v2 = new Quantity<>(1.0, VolumeUnit.MILLILITRE);
+		v1 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
 		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2);
 		Quantity<VolumeUnit> expected = new Quantity<>(2.0, VolumeUnit.LITRE);		
 		assertTrue(result.equals(expected));
 	}
 	
 	@Test
-	public void testAddition_CrossUnit_LitrePlusMillilitre() {
-		
+	public void testAddition_CrossUnit_LitrePlusMillilitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+		v2 = new Quantity<>(4000.0, VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2);
+		Quantity<VolumeUnit> expected = new Quantity<>(5.0, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testAddition_CrossUnit_MillilitrePlusLitre() {
-		
+	public void testAddition_CrossUnit_MillilitrePlusLitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(3000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(2.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2);
+		Quantity<VolumeUnit> expected = new Quantity<>(5.0, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testAddition_CrossUnit_GallonPlusLitre() {
-		
+	public void testAddition_CrossUnit_GallonPlusLitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1.0, VolumeUnit.GALLON);
+		v2 = new Quantity<>(1.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2);
+		Quantity<VolumeUnit> expected = new Quantity<>(4.78541, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 	
 	@Test
-	public void testAddition_ExplicitTargetUnit_Litre() {
-		
+	public void testAddition_ExplicitTargetUnit_Litre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(2000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(3.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(5.0, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testAddition_ExplicitTargetUnit_Millilitre() {
-		
+	public void testAddition_ExplicitTargetUnit_Millilitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(2000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(3.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2, VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(5000.0, VolumeUnit.MILLILITRE);		
+		assertTrue(result.equals(expected));
 	}
 	
 	@Test
-	public void testAddition_ExplicitTargetUnit_Gallon() {
-		
+	public void testAddition_ExplicitTargetUnit_Gallon() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(2.78541, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2, VolumeUnit.GALLON);
+		Quantity<VolumeUnit> expected = new Quantity<>(1.0, VolumeUnit.GALLON);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testAddition_Commutativitys() {
-		
-	}
-
-	@Test
-	public void testAddition_WithZeroo() {
-		
-	}
-
-	@Test
-	public void testAddition_NegativeValuess() {
-		
-	}
-
-	@Test
-	public void testAddition_LargeValuess() {
-		
-	}
-
-	@Test
-	public void testAddition_SmallValues() {
-		
+	public void testAddition_Commutativitys() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(2.78541, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result2 = QuantityMeasurementApp.demonstrateAddition(v1, v2, VolumeUnit.GALLON);
+		Quantity<VolumeUnit> result1 = QuantityMeasurementApp.demonstrateAddition(v2, v1, VolumeUnit.GALLON);
+		assertTrue(result1.equals(result2));
 	}
 
 	@Test
 	public void testVolumeUnitEnum_LitreConstant() {
-		
+		double result = VolumeUnit.LITRE.convertToBaseUnit(1.0);
+	    assertEquals(1.0, result, 0.0001);
 	}
 	
 
 	@Test
 	public void testVolumeUnitEnum_MillilitreConstant() {
-		
+		double result = VolumeUnit.MILLILITRE.convertToBaseUnit(1000.0);
+	    assertEquals(1.0, result, 0.0001);
 	}
 
 	@Test
 	public void testVolumeUnitEnum_GallonConstant() {
-		
+		double result = VolumeUnit.GALLON.convertToBaseUnit(1.0);
+	    assertEquals(3.78541, result, 0.0001);
 	}
 
 	@Test
-	public void testConvertToBaseUnit_LitreToLitre() {
-		
+	public void testConvertToBaseUnit_LitreToLitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(1.0, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}	
 
 	@Test
-	public void testConvertToBaseUnit_MillilitreToLitre() {
-		
+	public void testConvertToBaseUnit_MillilitreToLitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(5000.0, VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(5.0, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testConvertToBaseUnit_GallonToLitre() {
-		
+	public void testConvertToBaseUnit_GallonToLitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1.0, VolumeUnit.GALLON);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(3.78541, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testConvertFromBaseUnit_LitreToLitre() {
-		
+	public void testConvertFromBaseUnit_LitreToLitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(1.0, VolumeUnit.LITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testConvertFromBaseUnit_LitreToMillilitre() {
-		
+	public void testConvertFromBaseUnit_LitreToMillilitre() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);		
+		assertTrue(result.equals(expected));
 	}
 
 	@Test
-	public void testConvertFromBaseUnit_LitreToGallon() {
-		
+	public void testConvertFromBaseUnit_LitreToGallon() throws InvalidUnitMeasurementException {
+		v1 = new Quantity<>(3.78541, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.GALLON);
+		Quantity<VolumeUnit> expected = new Quantity<>(1.0, VolumeUnit.GALLON);		
+		assertTrue(result.equals(expected));
 	}
 	
 	@Test
-	public void testBackwardCompatibility_AllUC1Through10Tests() {
-		
+	public void testBackwardCompatibility_AllUC1Through10Tests() throws InvalidUnitMeasurementException {
+		Quantity<LengthUnit> feet1 = new Quantity<>(10.0, LengthUnit.FEET);
+        Quantity<LengthUnit> feet2 = new Quantity<>(10.0, LengthUnit.FEET);
+        
+        // Using the new Generic App Logic
+        assertTrue(QuantityMeasurementApp.demonstrateEquality(feet1, feet2));
+        
+        w1 = new Quantity<>(1.0,WeightUnit.KILOGRAM);
+		w2 = new Quantity<>(1.0,WeightUnit.KILOGRAM);
+		assertTrue(w1.equals(w2));
 	}
 	
 	@Test
-	public void testGenericQuantity_VolumeOperations_Consistency() {
-		
+	public void testGenericQuantity_VolumeOperations_Consistency() throws InvalidUnitMeasurementException {
+		Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+        assertTrue(v1.equals(v2));
+        
+        v1 = new Quantity<>(2000.0, VolumeUnit.MILLILITRE);
+		v2 = new Quantity<>(3.0, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2, VolumeUnit.MILLILITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(5000.0, VolumeUnit.MILLILITRE);		
+		assertTrue(result.equals(expected));
+        
+        
+        v1 = new Quantity<>(3.78541, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result1 = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.GALLON);
+		Quantity<VolumeUnit> expected1 = new Quantity<>(1.0, VolumeUnit.GALLON);		
+		assertTrue(result1.equals(expected1));
+        
 	}
 
 	@Test
-	public void testScalability_VolumeIntegration() {
-		
+	public void testScalability_VolumeIntegration() throws InvalidUnitMeasurementException {
+		Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.GALLON);
+        Quantity<VolumeUnit> v2 = new Quantity<>(3.78541, VolumeUnit.LITRE);
+        assertTrue(v1.equals(v2));
+        
+        v1 = new Quantity<>(3.78541, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result1 = QuantityMeasurementApp.demonstrateConversion(v1, VolumeUnit.GALLON);
+		Quantity<VolumeUnit> expected1 = new Quantity<>(1.0, VolumeUnit.GALLON);		
+		assertTrue(result1.equals(expected1));
+        
+        
+        v1 = new Quantity<>(1.0, VolumeUnit.GALLON);
+        v2 = new Quantity<>(3.78541, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> result = QuantityMeasurementApp.demonstrateAddition(v1, v2, VolumeUnit.LITRE);
+		Quantity<VolumeUnit> expected = new Quantity<>(7.57082, VolumeUnit.LITRE);		
+		assertTrue(expected.equals(result));
 	}
 }
