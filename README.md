@@ -27,10 +27,10 @@ This project was implemented incrementally using:
 - Support division operations  
 
 ### ✅ Implementation
-- Added `subtract()` method  
-- Added `divide()` method  
+- Added `subtract()` method
+- Added `divide()` method
 - Ensured same-category enforcement  
-- Maintained base unit conversion logic  
+- Maintained base unit conversion logics
 - Precision-safe arithmetic  
 
 ### ⚙ Design Principle
