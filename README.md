@@ -17,27 +17,32 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 23 Feb 2026  
-### 🔹 UC12 – Subtraction & Division Operations  
-**Branch:**  `feature/UC12-SubtractionAndDivision`
+## 📅 24 Feb 2026  
+### 🔹 UC14 – Temperature Measurement with Selective Arithmetic Support & Measurable Refactoring  
+**Branch:**  `feature/UC14-TemperatureMeasurementwithSelectiveArithmetic`
 
 ### 🎯 Objective
-- Extend arithmetic support  
-- Enable subtraction between quantities  
-- Support division operations  
+- Add Temperature measurement category  
+- Support Celsius & Fahrenheit  
+- Restrict invalid arithmetic operations  
+- Refactor measurable behavior  
+
+### ⚠ Special Challenge
+Temperature is **not purely linear like length or weight**  
+Conversion requires formula-based transformation:
+- °F = (°C × 9/5) + 32  
 
 ### ✅ Implementation
-- Added `subtract()` method
-- Added `divide()` method
-- Ensured same-category enforcement  
-- Maintained base unit conversion logics
-- Precision-safe arithmetic  
+- Created `TemperatureUnit` enum  
+- Implemented formula-based conversion logic  
+- Allowed equality comparison  
+- Restricted unsupported arithmetic (e.g., adding two temperatures directly)  
+- Applied measurable abstraction refactoring  
 
-### ⚙ Design Principle
-All arithmetic operations follow:
-1. Convert to base unit  
-2. Perform operation  
-3. Convert to target unit  
-- [feature/UC12-SubtractionAndDivision](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC12-SubtractionAndDivision/src/main/java/com/apps/quantitymeasurementapp)
+### 🧠 Architectural Enhancement
+- Introduced selective arithmetic capability  
+- Improved domain modeling  
+- Applied behavior-driven restrictions  
+- [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
