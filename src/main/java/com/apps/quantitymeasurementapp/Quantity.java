@@ -37,48 +37,46 @@ public class Quantity<U extends IMeasurable> {
 	//add
 	public Quantity<U> add(Quantity<U> other){
 		this.validateArithmeticOperands(other, null, false);
-		double part1 = this.convertTo(this.unit);
-		double part2 = other.convertTo(this.unit);
-		return new Quantity<>((part1+part2),this.unit);
+		double baseResult = performBaseArithmetic(other, ArithmeticOperation.ADD);
+	    double finalResult = this.unit.convertFromBaseUnit(baseResult);
+		return new Quantity<>(finalResult,this.unit);
 	}
 	//add with target unit
 	public Quantity<U> add(Quantity<U> other, U targetUnit){
-		double part1 = this.convertTo(targetUnit);
-		double part2 = other.convertTo(targetUnit);
-		return new Quantity<>((part1+part2),targetUnit);
+		this.validateArithmeticOperands(other, targetUnit, true);
+		double baseResult = performBaseArithmetic(other, ArithmeticOperation.ADD);
+	    double finalResult = targetUnit.convertFromBaseUnit(baseResult);
+		return new Quantity<>(finalResult,targetUnit);
 	}
 	
 	//subtract method
 	public Quantity<U> subtract(Quantity<U> other){
 		this.validateArithmeticOperands(other, null, false);
-		double part1 = this.unit.convertToBaseUnit(this.value);
-		double part2 = other.unit.convertToBaseUnit(other.value);
-		
-		double baseResult = part1-part2;
-		double finalResult = this.unit.convertFromBaseUnit(baseResult);
+		double baseResult = performBaseArithmetic(other, ArithmeticOperation.SUBTRACT);
+	    double finalResult = this.unit.convertFromBaseUnit(baseResult);
 		return new Quantity<>(finalResult,this.unit);
 	}
 	
 	//subtract method for specific unit
 	public Quantity<U> subtract(Quantity<U> other, U targetUnit){
-		double part1 = this.unit.convertToBaseUnit(this.value);
-		double part2 = other.unit.convertToBaseUnit(other.value);
-		
-		double baseResult = part1-part2;
-		double finalResult = targetUnit.convertFromBaseUnit(baseResult);
+		this.validateArithmeticOperands(other, targetUnit, true);
+		double baseResult = performBaseArithmetic(other, ArithmeticOperation.SUBTRACT);
+	    double finalResult = targetUnit.convertFromBaseUnit(baseResult);
+	    System.out.println(finalResult);
 		return new Quantity<>(finalResult,targetUnit);
 	}
 	
 	//division
 	public double divide(Quantity<U> other){
 		this.validateArithmeticOperands(other, null, false);
-		double part1 = this.unit.convertToBaseUnit(this.value);
-		double part2 = other.unit.convertToBaseUnit(other.value);
-		if (part2 == 0) {
-	        throw new ArithmeticException("Cannot divide by zero");
-		}
-		double baseResult = part1/part2;
-		return baseResult;
+		return performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
+	}
+	
+	public double divide(Quantity<U> other, U targetUnit){
+		this.validateArithmeticOperands(other, targetUnit, true);
+		double baseResult = performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
+	    double finalResult = targetUnit.convertFromBaseUnit(baseResult);
+	    return finalResult;
 	}
 	
 	//equals
@@ -123,9 +121,9 @@ public class Quantity<U extends IMeasurable> {
 	}
 	
 	private double performBaseArithmetic(Quantity<U> other,  ArithmeticOperation operation) {
-		double temp = other.convertTo(this.getUnit());
-    	double result = operation.compute(this.getValue(),temp);
-    	return result;
+		double base1 = this.unit.convertToBaseUnit(this.value);
+		double base2 = other.unit.convertToBaseUnit(other.value);
+    	return operation.compute(base1, base2);
 	}
 	private enum ArithmeticOperation{
 		ADD((a,b)-> a+b),
