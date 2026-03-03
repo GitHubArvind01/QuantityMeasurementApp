@@ -3,25 +3,31 @@ package com.apps.quantitymeasurementapp;
 import java.util.function.Function;
 
 public enum TemperatureUnit implements IMeasurable{
-	CELISUS(false),
-	FAHRENHEIT(true);
-	private boolean isFahrenheit;
-	
-	//function for FAHRENHEIT to CELISUS 
-	final Function<Double, Double> FAHRENHEIT_TO_CELISUS = (fahrenheit)-> (fahrenheit-30)*5/9;
-	final Function<Double, Double> CELISUS_TO_CELISUS = (celisus)-> celisus;
-	
-	Function<Double,Double> conversionValue;
-	
-	SupportsArithmetic supportsArithmetic = ()-> false;
-	
-	TemperatureUnit(boolean isFahrenheit){
-		this.isFahrenheit = isFahrenheit;
-	}
-	
-	public boolean getFahrenheit() {
-		return isFahrenheit;
-	}
+	CELSIUS(
+        c -> c,
+        c -> c
+    ),
+
+    FAHRENHEIT(
+        f -> (f - 32) * 5 / 9,
+        c -> (c * 9 / 5) + 32
+    ),
+
+    KELVIN(
+        k -> k - 273.15,
+        c -> c + 273.15
+    );
+
+    private final Function<Double, Double> toBase;
+    private final Function<Double, Double> fromBase;
+
+    SupportsArithmetic supportsArithmetic = () -> false;
+
+    TemperatureUnit(Function<Double, Double> toBase,
+                    Function<Double, Double> fromBase) {
+        this.toBase = toBase;
+        this.fromBase = fromBase;
+    }
 
 	@Override
 	public double getConversionFactor() {
@@ -30,17 +36,17 @@ public enum TemperatureUnit implements IMeasurable{
 
 	@Override
 	public double convertToBaseUnit(double value) {
-		return conversionValue.apply(value);
+		return toBase.apply(value);
 	}
 
 	@Override
 	public double convertFromBaseUnit(double baseValue) {
-		return 0;
+		return fromBase.apply(baseValue);
 	}
 
 	@Override
 	public String getUnitName() {
-		return this.getUnitName();
+		return this.name();
 	}	
 	
 	public boolean supportsArithmetic() {
@@ -49,12 +55,9 @@ public enum TemperatureUnit implements IMeasurable{
 	
 	@Override
 	public void validateOperationSupport(String operation) {
-		if(!supportsArithmetic.isSupported()) {
+		if(operation.equals("ADD") || operation.equals("DIVIDE") || operation.equals("SUBTRACT")) {
 			String message = this.name()+" does not support "+operation+" operations!";
 			throw new UnsupportedOperationException(message);
-		}
-	}
-	public static void main(String args[]) {
-		
+	    }
 	}
 }
