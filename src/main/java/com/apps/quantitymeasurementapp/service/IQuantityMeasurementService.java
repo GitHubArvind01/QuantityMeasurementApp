@@ -16,4 +16,6 @@ public interface IQuantityMeasurementService {
 	public QuantityDTO subtract (QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO);
 	
 	public QuantityDTO divide (QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO);
+	
+	public QuantityDTO divide (QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO);
 }
