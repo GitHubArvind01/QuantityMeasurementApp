@@ -76,27 +76,28 @@ public class Quantity<U extends IMeasurable> {
 		this.validateArithmeticOperands(other, targetUnit, true);
 		double baseResult = performBaseArithmetic(other, ArithmeticOperation.SUBTRACT);
 	    double finalResult = targetUnit.convertFromBaseUnit(baseResult);
-	    System.out.println(finalResult);
 		return new Quantity<>(finalResult,targetUnit);
 	}
 	
 	//division
-	public double divide(Quantity<U> other){
+	public Quantity<U> divide(Quantity<U> other){
 		if(other.unit.getClass()!=this.unit.getClass()) {
 			throw new IllegalArgumentException("Can't possible substract between another units!");
 		}
 		this.validateArithmeticOperands(other, null, false);
-		return performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
+		double baseResult = performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
+	    double finalResult = this.unit.convertFromBaseUnit(baseResult);
+		return new Quantity<>(finalResult,this.unit);
 	}
 	
-	public double divide(Quantity<U> other, U targetUnit){
+	public Quantity<U> divide(Quantity<U> other, U targetUnit){
 		if(other.unit.getClass()!=this.unit.getClass()) {
 			throw new IllegalArgumentException("Can't possible substract between another units!");
 		}
 		this.validateArithmeticOperands(other, targetUnit, true);
 		double baseResult = performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
 	    double finalResult = targetUnit.convertFromBaseUnit(baseResult);
-	    return finalResult;
+		return new Quantity<>(finalResult,targetUnit);
 	}
 	
 	//equals
@@ -145,13 +146,19 @@ public class Quantity<U extends IMeasurable> {
 	}
 	
 	private double performBaseArithmetic(Quantity<U> other,  ArithmeticOperation operation) {
-		 // validate support for operation
-	    this.unit.validateOperationSupport(operation.name());
-	    other.unit.validateOperationSupport(operation.name());
+		// validate support for operation
+	    try {
+	    		this.unit.validateOperationSupport(operation.name());
+		    other.unit.validateOperationSupport(operation.name());
+	    }
+	    catch(Exception e) {
+	    		// If the unit doesn't support ADD or SUBTRACT
+	    		throw new UnsupportedOperationException("Operation " + operation.name() + " not supported for this unit type.");
+	    }
 	    
 		double base1 = this.unit.convertToBaseUnit(this.value);
 		double base2 = other.unit.convertToBaseUnit(other.value);
-    	return operation.compute(base1, base2);
+		return operation.compute(base1, base2);
 	}
 	private enum ArithmeticOperation{
 		ADD((a,b)-> a+b),
