@@ -261,8 +261,9 @@ public class QuantityMeasurementApp {
 		QuantityMeasurementApp app = getInstance();
 		QuantityDTO feetDTO = new QuantityDTO(12.0, "INCHES", "LENGTH");
 	    QuantityDTO inchDTO = new QuantityDTO(12, "FEET", "LENGTH");
+	    QuantityDTO targetDTO = new QuantityDTO(0, "CENTIMETERS", "LENGTH");
 	    
-	    QuantityDTO result = app.controller.performAddition(feetDTO, inchDTO);
+	    QuantityDTO result = app.controller.performAddition(feetDTO, inchDTO, targetDTO);
 	    System.out.println(result);
 	}
 }
