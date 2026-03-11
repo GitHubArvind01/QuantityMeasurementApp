@@ -24,7 +24,9 @@ public enum LengthUnit implements IMeasurable{
 
 	@Override
 	public double convertFromBaseUnit(double baseValue) {
-		return baseValue/this.getConversionFactor();
+		double result = baseValue / this.getConversionFactor();
+	    // Rounding to 2 decimal places:
+	    return Math.round(result * 100.0) / 100.0;
 	}
 
 	@Override
