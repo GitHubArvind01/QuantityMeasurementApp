@@ -41,7 +41,6 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         validateModels(model1, model2);
 
         // 3. Create Quantity<IMeasurable> objects from the QuantityModel instances
-        // This is where the business logic from UC14 resides
         Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
         Quantity<IMeasurable> q2 = new Quantity<>(model2.getValue(), model2.getUnit());
 
@@ -76,11 +75,44 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
 	@Override
 	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return null;
+		// 1. Convert QuantityDTO instances to QuantityModel instances (Mapping Strings to Objects)
+        QuantityModel<IMeasurable> model1 = mapToModel(thisQuantityDTO);
+        QuantityModel<IMeasurable> model2 = mapToModel(thatQuantityDTO);
+
+        // 2. Validate operands (non-null, same category, finite)
+        validateModels(model1, model2);
+
+        // 3. Create Quantity<IMeasurable> objects from the QuantityModel instances
+        Quantity<IMeasurable> q1 = new Quantity<>(model1.getValue(), model1.getUnit());
+        Quantity<IMeasurable> q2 = new Quantity<>(model2.getValue(), model2.getUnit());
+        
+        // 4. Call q1.subtract(q2)
+        Quantity<IMeasurable> resultQuantity = q1.subtract(q2);
+        
+        // 5. Extract result value and unit
+        double resultValue = resultQuantity.getValue();
+        String resultUnitName = resultQuantity.getUnit().toString();
+
+        // 6. Store in repository as QuantityMeasurementEntity
+        QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
+        		thisQuantityDTO.getValue(), 
+        		thisQuantityDTO.getUnit(), 
+        		thisQuantityDTO.getMeasurementType(),
+        		thatQuantityDTO.getValue(), 
+        		thatQuantityDTO.getUnit(), 
+        		thatQuantityDTO.getMeasurementType(),
+                "SUBTRACT",
+                resultValue, resultUnitName, thisQuantityDTO.getMeasurementType()
+        );
+        repository.save(entity);
+
+        // 7. Return new QuantityDTO for the response
+        return new QuantityDTO(resultValue, resultUnitName, thisQuantityDTO.getMeasurementType());        
 	}
 
 	@Override
 	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {
+		
 		return null;
 	}
 
