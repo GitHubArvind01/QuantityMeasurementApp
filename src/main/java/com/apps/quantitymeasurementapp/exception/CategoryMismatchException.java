@@ -1,12 +1,13 @@
 package com.apps.quantitymeasurementapp.exception;
 
-public class InvalidUnitMeasurementException extends RuntimeException{
+public class CategoryMismatchException extends RuntimeException{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public InvalidUnitMeasurementException(String msg) {
+	public CategoryMismatchException(String msg) {
 		super(msg);
 	}
 }

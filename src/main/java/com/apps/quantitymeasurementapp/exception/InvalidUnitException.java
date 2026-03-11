@@ -1,12 +1,12 @@
 package com.apps.quantitymeasurementapp.exception;
 
-public class InvalidUnitMeasurementException extends RuntimeException{
+public class InvalidUnitException extends RuntimeException{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public InvalidUnitMeasurementException(String msg) {
+	public InvalidUnitException(String msg) {
 		super(msg);
 	}
 }
