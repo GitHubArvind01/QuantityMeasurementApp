@@ -95,17 +95,4 @@ public class QuantityDTO {
 	public String toString() {
 		return "QuantityDTO [value=" + value + ", unit=" + unit + ", measurementType=" + getMeasurementType() + "]";
 	}
-	
-	public static void main(String[] args) {
-
-	    QuantityDTO length = new QuantityDTO(10, LengthUnit.FEET);
-	    QuantityDTO volume = new QuantityDTO(5, VolumeUnit.LITRE);
-	    QuantityDTO weight = new QuantityDTO(2, WeightUnit.KILOGRAM);
-	    QuantityDTO temperature = new QuantityDTO(37, TemperatureUnit.CELSIUS);
-
-	    System.out.println(length);
-	    System.out.println(volume);
-	    System.out.println(weight);
-	    System.out.println(temperature);
-	}
 }

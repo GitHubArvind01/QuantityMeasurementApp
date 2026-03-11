@@ -140,11 +140,5 @@ public class QuantityMeasurementEntity implements java.io.Serializable{
                 "\n" +
                 "Error                 : " + isError + "\n" +
                 "Error Message         : " + errorMessage + "\n";
-    }
-    
-    public static void main(String[] args) {
-        QuantityMeasurementEntity entity = new QuantityMeasurementEntity(1, "Feet", "Length", 12, "Inch", "Length", "COMPARE", "Equal");
-        System.out.println(entity);
-    }
-    
+    }    
 }
