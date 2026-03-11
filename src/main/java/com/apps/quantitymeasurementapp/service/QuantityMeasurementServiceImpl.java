@@ -80,13 +80,8 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	}
 
 	@Override
-	public QuantityDTO divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, "DIVIDE");
-	}
-	
-	@Override
-	public QuantityDTO divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, targetUnitDTO, "DIVIDE_TO_TARGET");
+	public double divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
+		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, "DIVIDE").getValue();
 	}
 	
 	  /**
