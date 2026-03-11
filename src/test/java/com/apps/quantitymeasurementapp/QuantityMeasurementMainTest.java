@@ -980,7 +980,7 @@ class QuantityMeasurementMainTest<U extends IMeasurable> {
         Quantity<LengthUnit> q1 = new Quantity<>(10.0, LengthUnit.FEET);
         Quantity<LengthUnit> q2 = new Quantity<>(2.0, LengthUnit.FEET);
         
-        Quantity<LengthUnit> result = QuantityMeasurementApp.demonstrateDivision(q1, q2);
+        Quantity<LengthUnit> result = new Quantity<LengthUnit>( QuantityMeasurementApp.demonstrateDivision(q1, q2), LengthUnit.FEET);
         Quantity<LengthUnit> expected = new Quantity<>(5.0, LengthUnit.FEET);;
         assertTrue(result.equals(expected));
     }
@@ -990,7 +990,7 @@ class QuantityMeasurementMainTest<U extends IMeasurable> {
         Quantity<LengthUnit> q1 = new Quantity<>(24.0, LengthUnit.INCHES);
         Quantity<LengthUnit> q2 = new Quantity<>(2.0, LengthUnit.FEET);
 
-        Quantity<LengthUnit> result = QuantityMeasurementApp.demonstrateDivision(q1, q2);
+        Quantity<LengthUnit> result = new Quantity<LengthUnit>(QuantityMeasurementApp.demonstrateDivision(q1, q2), LengthUnit.INCHES);
         Quantity<LengthUnit> expected = new Quantity<>(12.0, LengthUnit.INCHES);;
         assertTrue(result.equals(expected));
     }
