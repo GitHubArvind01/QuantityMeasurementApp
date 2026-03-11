@@ -148,11 +148,12 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 		if (opType.contains("ADD")) {
 			result = (mT != null) ? q1.add(q2, mT.getUnit()) : q1.add(q2);
 		}
-		else if (opType.contains("DIVIDE")) {
-			result = (mT != null) ? q1.divide(q2, mT.getUnit()) : q1.divide(q2);
-		} 
-		else {
+		else if (opType.contains("SUBTRACT")) {
 			result = (mT != null) ? q1.subtract(q2, mT.getUnit()) : q1.subtract(q2);
+		}
+		else{
+			double value = q1.divide(q1);
+			result = new Quantity<IMeasurable>(value, q1.getUnit());
 		}
 
 		// 4. Extract & Save (Persistence)
