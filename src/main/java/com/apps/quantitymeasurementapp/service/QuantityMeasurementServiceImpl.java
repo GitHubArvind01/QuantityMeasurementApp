@@ -93,7 +93,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         IMeasurable unit;
 
         try {
-	        	switch (type) {
+	        	switch (type.toUpperCase()) {
 	            case "LENGTH": unit = LengthUnit.valueOf(unitName); break;
 	            case "VOLUME": unit = VolumeUnit.valueOf(unitName); break;
 	            case "WEIGHT": unit = WeightUnit.valueOf(unitName); break;
