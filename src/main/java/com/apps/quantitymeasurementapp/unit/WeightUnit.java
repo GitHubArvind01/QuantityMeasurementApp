@@ -1,4 +1,4 @@
-package com.apps.quantitymeasurementapp;
+package com.apps.quantitymeasurementapp.unit;
 
 public enum WeightUnit implements IMeasurable{
 	KILOGRAM(1.0),

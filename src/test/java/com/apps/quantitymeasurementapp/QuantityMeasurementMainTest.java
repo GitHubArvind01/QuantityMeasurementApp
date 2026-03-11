@@ -8,6 +8,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import com.apps.quantitymeasurementapp.exception.InvalidUnitMeasurementException;
+import com.apps.quantitymeasurementapp.quantity.Quantity;
+import com.apps.quantitymeasurementapp.unit.IMeasurable;
+import com.apps.quantitymeasurementapp.unit.LengthUnit;
+import com.apps.quantitymeasurementapp.unit.TemperatureUnit;
+import com.apps.quantitymeasurementapp.unit.VolumeUnit;
+import com.apps.quantitymeasurementapp.unit.WeightUnit;
 
 class QuantityMeasurementMainTest<U extends IMeasurable> {
 	
