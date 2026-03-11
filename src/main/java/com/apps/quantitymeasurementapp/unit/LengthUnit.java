@@ -19,7 +19,7 @@ public enum LengthUnit implements IMeasurable{
 
 	@Override
 	public double convertToBaseUnit(double value) {
-		return ((value*this.getConversionFactor())*100.0)/100.0;
+		return value*this.getConversionFactor();
 	}
 
 	@Override
