@@ -80,24 +80,13 @@ public class Quantity<U extends IMeasurable> {
 	}
 	
 	//division
-	public Quantity<U> divide(Quantity<U> other){
+	public double divide(Quantity<U> other){
 		if(other.unit.getClass()!=this.unit.getClass()) {
 			throw new IllegalArgumentException("Can't possible substract between another units!");
 		}
 		this.validateArithmeticOperands(other, null, false);
 		double baseResult = performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
-	    double finalResult = this.unit.convertFromBaseUnit(baseResult);
-		return new Quantity<>(finalResult,this.unit);
-	}
-	
-	public Quantity<U> divide(Quantity<U> other, U targetUnit){
-		if(other.unit.getClass()!=this.unit.getClass()) {
-			throw new IllegalArgumentException("Can't possible substract between another units!");
-		}
-		this.validateArithmeticOperands(other, targetUnit, true);
-		double baseResult = performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
-	    double finalResult = targetUnit.convertFromBaseUnit(baseResult);
-		return new Quantity<>(finalResult,targetUnit);
+	    return this.unit.convertFromBaseUnit(baseResult);
 	}
 	
 	//equals
