@@ -1,82 +1,15 @@
 package com.apps.quantitymeasurementapp.entity;
 
-
-interface IMeasurableUnit{
-	public String getUnitName();
-	public String getMeasurementType();
-}
-
 public class QuantityDTO {
-	enum LengthUnit implements IMeasurableUnit{
-		FEET, INCHES, YARDS, CENTIMETERS;
-
-		@Override
-		public String getUnitName() {
-			return this.name();
-		}
-
-		@Override
-		public String getMeasurementType() {
-		    return this.getClass().getSimpleName().replace("Unit", "");
-		}
-	}
-	
-	enum VolumeUnit implements IMeasurableUnit{
-		LITRE, MILLILITRE, GALLON;
-
-		@Override
-		public String getUnitName() {
-			return this.name();
-		}
-
-		@Override
-		public String getMeasurementType() {
-		    return this.getClass().getSimpleName().replace("Unit", "");
-		}
-	}
-	
-	enum WeightUnit implements IMeasurableUnit{
-		KILOGRAM, GRAM, POUND;
-		
-		@Override
-		public String getUnitName() {
-			return this.name();
-		}
-
-		@Override
-		public String getMeasurementType() {
-		    return this.getClass().getSimpleName().replace("Unit", "");
-		}
-	}
-	
-	enum TemperatureUnit implements IMeasurableUnit{
-		CELSIUS, FAHRENHEIT, KELVIN;
-		
-		@Override
-		public String getUnitName() {
-			return this.name();
-		}
-
-		@Override
-		public String getMeasurementType() {
-		    return this.getClass().getSimpleName().replace("Unit", "");
-		}
-	}
 	
 	public double value;
 	public String unit;
 	public String measurementType;
-	
-	public QuantityDTO(double value, IMeasurableUnit unit) {
-		this.value = value;
-		this.unit = unit.getUnitName();
-		this.measurementType = unit.getMeasurementType();
-	}
 
 	public QuantityDTO(double value, String unit, String measurementType) {
 		this.value = value;
 		this.unit = unit;
-		this.measurementType = measurementType;
+		this.measurementType = measurementType.toUpperCase();
 	}
 
 	public double getValue() {
@@ -88,7 +21,7 @@ public class QuantityDTO {
 	}
 
 	public String getMeasurementType() {
-		return measurementType;
+		return measurementType.replace("UNIT", "");
 	}
 
 	@Override
