@@ -88,16 +88,16 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
      * Helper to map DTO (Strings) to Model (Actual Unit Enums)
      */
     private QuantityModel<IMeasurable> mapToModel(QuantityDTO dto) {
-        String type = dto.getMeasurementType().toUpperCase();
-        String unitName = dto.getUnit().toUpperCase();
+        String type = dto.getMeasurementType();
+        String unitName = dto.getUnit();
         IMeasurable unit;
 
         try {
-	        	switch (type.toUpperCase()) {
-	            case "LENGTH": unit = LengthUnit.valueOf(unitName); break;
-	            case "VOLUME": unit = VolumeUnit.valueOf(unitName); break;
-	            case "WEIGHT": unit = WeightUnit.valueOf(unitName); break;
-	            case "TEMPERATURE": unit = TemperatureUnit.valueOf(unitName); break;
+	        	switch (type) {
+	            case "LengthUnit": unit = LengthUnit.valueOf(unitName); break;
+	            case "VolumeUnit": unit = VolumeUnit.valueOf(unitName); break;
+	            case "WeightUnit": unit = WeightUnit.valueOf(unitName); break;
+	            case "TemperatureUnit": unit = TemperatureUnit.valueOf(unitName); break;
 	            default: throw new InvalidUnitMeasurementException("Invalid Measurement Category: " + type);
 	        }
         }
