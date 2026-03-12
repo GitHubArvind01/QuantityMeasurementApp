@@ -196,14 +196,6 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				null,
 				false,
 				null);
-		
-//		repository.save(entity);
-		try{
-			repository = QuantityMeasurementDatabaseRepository.getInstance();
-		}
-		catch(SQLException e) {
-			throw new DatabaseException("Data base issue!" + e.getMessage());
-		}
 		repository.save(entity);
 
 		// 5. Return
