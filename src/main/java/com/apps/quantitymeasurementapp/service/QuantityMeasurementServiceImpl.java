@@ -43,8 +43,11 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    Quantity<IMeasurable> q1 = new Quantity<>(m1.getValue(), m1.getUnit());
 	    Quantity<IMeasurable> q2 = new Quantity<>(m2.getValue(), m2.getUnit());
 	    
+	    double val1 = q1.convertTo(q1.getUnit());
+	    double val2 = q2.convertTo(q2.getUnit());
+	    
 	    // 4. Use the equals method from Quantity.java
-	    boolean isEqual = q1.equals(q2);
+	    boolean isEqual = Double.compare(val1, val2)==0;
 	    
 	    // 5. Save to Repository (Audit Trail)
 	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
