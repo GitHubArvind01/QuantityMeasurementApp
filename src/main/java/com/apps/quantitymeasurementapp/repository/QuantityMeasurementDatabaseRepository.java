@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -85,11 +84,15 @@ public class QuantityMeasurementDatabaseRepository implements IQuantityMeasureme
 	    }
 	}
 
-	public static synchronized QuantityMeasurementDatabaseRepository getInstance() throws SQLException {
+	public static synchronized QuantityMeasurementDatabaseRepository getInstance() {
 
 	    if (instance == null) {
 	        instance = new QuantityMeasurementDatabaseRepository();
-	        instance.connectionPool = ConnectionPool.getInstance();
+	        try {
+				instance.connectionPool = ConnectionPool.getInstance();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 	        instance.initializeDatabase();
 	    }
 
