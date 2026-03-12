@@ -1,5 +1,6 @@
 package com.apps.quantitymeasurementapp.service;
 
+
 import com.apps.quantitymeasurementapp.entity.QuantityDTO;
 import com.apps.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 import com.apps.quantitymeasurementapp.entity.QuantityModel;
@@ -65,7 +66,18 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	
 	@Override
 	public QuantityDTO convert(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.CONVERSION);
+		validateDTOs(thisQuantityDTO, thatQuantityDTO);
+		
+		// 1. Map
+		QuantityModel<IMeasurable> m1 = mapToModel(thisQuantityDTO);
+		QuantityModel<IMeasurable> m2 = mapToModel(thatQuantityDTO);
+		
+		// 3. Create Domain Objects
+	    Quantity<IMeasurable> q1 = new Quantity<>(m1.getValue(), m1.getUnit());
+	    
+	    double value1 = q1.convertTo(m2.getUnit());
+	    
+	    return new QuantityDTO(value1, m2.getUnit());
 	}
 
 	@Override
@@ -90,7 +102,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
 	@Override
 	public double divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.DIVIDE).getValue();
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, null, Operation.DIVIDE).getValue();
 	}
 	
 	  /**
@@ -100,7 +112,6 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         String type = dto.getMeasurementType();
         String unitName = dto.getUnit();
         IMeasurable unit;
-
         try {
 	        	switch (type) {
 	            case "LengthUnit": unit = LengthUnit.valueOf(unitName); break;
@@ -169,7 +180,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 			result = (mT != null) ? q1.subtract(q2, mT.getUnit()) : q1.subtract(q2);
 		}
 		else{
-			double value = q1.divide(q1);
+			double value = q1.divide(q2);
 			result = new Quantity<IMeasurable>(value, q1.getUnit());
 		}
 
