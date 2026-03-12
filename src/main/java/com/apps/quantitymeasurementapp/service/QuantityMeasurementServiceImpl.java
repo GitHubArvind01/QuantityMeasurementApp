@@ -23,6 +23,10 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	public QuantityMeasurementServiceImpl(IQuantityMeasurementRepository repository) {
 		this.repository = repository;
 	}
+	
+	private enum Operation {
+		COMPARISON, CONVERSION, ADD, ADD_TO_TARGET, SUBTRACT, SUBTRACT_TO_TARGET, DIVIDE;
+	}
 
 	@Override
 	public boolean compare(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
@@ -44,7 +48,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
 	            thisQuantityDTO.getValue(), thisQuantityDTO.getUnit(), thisQuantityDTO.getMeasurementType(),
 	            thatQuantityDTO.getValue(), thatQuantityDTO.getUnit(), thatQuantityDTO.getMeasurementType(),
-	            "COMPARE",
+	            Operation.COMPARISON.name(),
 	            isEqual ? 1.0 : 0.0, // Storing result as 1 for true, 0 for false
 	            "BOOLEAN",
 	            thisQuantityDTO.getMeasurementType()
@@ -56,32 +60,32 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	
 	@Override
 	public QuantityDTO convert(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, "CONVERT");
+		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.CONVERSION);
 	}
 
 	@Override
 	public QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, "ADD");
+		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.ADD);
 	}
 
 	@Override
 	public QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {
-		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, "ADD_TO_TARGET");
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.ADD_TO_TARGET);
 	}
 
 	@Override
 	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, "SUBTRACT");
+		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.SUBTRACT);
 	}
 
 	@Override
 	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {;
-		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, "SUBTRACT_TO_TARGET");
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.SUBTRACT_TO_TARGET);
 	}
 
 	@Override
 	public double divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, "DIVIDE").getValue();
+		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.DIVIDE).getValue();
 	}
 	
 	  /**
@@ -129,7 +133,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
      * This will helper method reuse for all method 
      */
     
-    private QuantityDTO executeArithmetic(QuantityDTO d1, QuantityDTO d2, QuantityDTO target, String opType) {
+    private QuantityDTO executeArithmetic(QuantityDTO d1, QuantityDTO d2, QuantityDTO target, Operation opType) {
 		// 1. Map
 		QuantityModel<IMeasurable> m1 = mapToModel(d1);
 		QuantityModel<IMeasurable> m2 = mapToModel(d2);
@@ -145,10 +149,10 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 		Quantity<IMeasurable> q2 = new Quantity<>(m2.getValue(), m2.getUnit());
 
 		Quantity<IMeasurable> result;
-		if (opType.contains("ADD")) {
+		if (opType.name().contains("ADD")) {
 			result = (mT != null) ? q1.add(q2, mT.getUnit()) : q1.add(q2);
 		}
-		else if (opType.contains("SUBTRACT")) {
+		else if (opType.name().contains("SUBTRACT")) {
 			result = (mT != null) ? q1.subtract(q2, mT.getUnit()) : q1.subtract(q2);
 		}
 		else{
@@ -166,7 +170,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				d1.getMeasurementType(), 
 				d2.getValue(), d2.getUnit(), 
 				d2.getMeasurementType(), 
-				opType, 
+				opType.name(), 
 				resVal, 
 				resUnit,
 				d1.getMeasurementType());
