@@ -23,7 +23,7 @@ public class QuantityMeasurementAppTest {
 	//here start
 	@Test
     public void testQuantityEntity_SingleOperandConstruction() {
-        // Verifies correct storage using the Enum-based constructor
+        // Verifies correct storage using the Enum-based constructors
         QuantityDTO quantity = new QuantityDTO(1.0, "FEET", "LengthUnit");
         
         assertEquals(1.0, quantity.getValue());
