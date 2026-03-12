@@ -7,6 +7,7 @@ import com.apps.quantitymeasurementapp.exception.InvalidUnitMeasurementException
 import com.apps.quantitymeasurementapp.quantity.Quantity;
 import com.apps.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
 import com.apps.quantitymeasurementapp.repository.QuantityMeasurementCacheRepository;
+import com.apps.quantitymeasurementapp.repository.QuantityMeasurementDatabaseRepository;
 import com.apps.quantitymeasurementapp.service.QuantityMeasurementServiceImpl;
 import com.apps.quantitymeasurementapp.unit.IMeasurable;
 import com.apps.quantitymeasurementapp.unit.LengthUnit;
@@ -74,8 +75,8 @@ public class QuantityMeasurementApp {
 
 	public IQuantityMeasurementRepository repository;
 
-	private QuantityMeasurementApp() {
-		this.repository = QuantityMeasurementCacheRepository.getInstance();
+	private QuantityMeasurementApp(){
+		this.repository = QuantityMeasurementDatabaseRepository.getInstance();
 		QuantityMeasurementServiceImpl service = new QuantityMeasurementServiceImpl(this.repository);
 		this.controller = new QuantityMeasurementController(service);
 	}
