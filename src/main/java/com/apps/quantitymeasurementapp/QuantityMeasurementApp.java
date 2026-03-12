@@ -1,5 +1,6 @@
 package com.apps.quantitymeasurementapp;
 
+
 import com.apps.quantitymeasurementapp.controller.QuantityMeasurementController;
 import com.apps.quantitymeasurementapp.entity.QuantityDTO;
 import com.apps.quantitymeasurementapp.exception.InvalidUnitMeasurementException;
@@ -8,6 +9,8 @@ import com.apps.quantitymeasurementapp.repository.IQuantityMeasurementRepository
 import com.apps.quantitymeasurementapp.repository.QuantityMeasurementCacheRepository;
 import com.apps.quantitymeasurementapp.service.QuantityMeasurementServiceImpl;
 import com.apps.quantitymeasurementapp.unit.IMeasurable;
+import com.apps.quantitymeasurementapp.unit.LengthUnit;
+import com.apps.quantitymeasurementapp.unit.VolumeUnit;
 import com.apps.quantitymeasurementapp.unit.WeightUnit;
 
 
@@ -100,5 +103,23 @@ public class QuantityMeasurementApp {
 	    System.out.println(
 	    			app.controller.performAddition(q1, q2)
 	    		);
+	    
+	    System.out.println(
+	    		app.controller.performComparison(
+	                    new QuantityDTO(1.0, VolumeUnit.LITRE),
+	                    new QuantityDTO(1000.0, VolumeUnit.MILLILITRE))
+	    		);
+	    
+	    QuantityDTO source = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
+
+        QuantityDTO resultd = app.controller.performConversion(source, target);
+        System.out.println(resultd);
+        
+        QuantityDTO q11 = new QuantityDTO(2.0, VolumeUnit.LITRE);
+        QuantityDTO q22 = new QuantityDTO(1000.0, VolumeUnit.MILLILITRE);
+        System.out.println(
+        			app.controller.performDivision(q11, q22)
+        		);
 	}
 }
