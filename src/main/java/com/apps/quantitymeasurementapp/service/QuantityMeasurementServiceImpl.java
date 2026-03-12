@@ -30,6 +30,8 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
 	@Override
 	public boolean compare(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
+		validateDTOs(thisQuantityDTO, thatQuantityDTO);
+		
 		// 1. Map
 		QuantityModel<IMeasurable> m1 = mapToModel(thisQuantityDTO);
 		QuantityModel<IMeasurable> m2 = mapToModel(thatQuantityDTO);
@@ -55,7 +57,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    );
 	    repository.save(entity);
 				
-        return isEqual;
+        return true;
 	}
 	
 	@Override
@@ -129,11 +131,19 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         	}
     }
     
+    private void validateDTOs(QuantityDTO thisDTO, QuantityDTO thatDTO) {
+    		if(thisDTO==null || thatDTO==null) {
+    			throw new QuantityMeasurementException("Measurement operands cannot be null"); 
+    		}
+    }
+    
     /**
      * This will helper method reuse for all method 
      */
     
     private QuantityDTO executeArithmetic(QuantityDTO d1, QuantityDTO d2, QuantityDTO target, Operation opType) {
+    		validateDTOs(d2, d2);
+		
 		// 1. Map
 		QuantityModel<IMeasurable> m1 = mapToModel(d1);
 		QuantityModel<IMeasurable> m2 = mapToModel(d2);
