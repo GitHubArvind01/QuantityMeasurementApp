@@ -1,15 +1,19 @@
 package com.apps.quantitymeasurementapp.service;
 
 
+import java.sql.SQLException;
+
 import com.apps.quantitymeasurementapp.entity.QuantityDTO;
 import com.apps.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 import com.apps.quantitymeasurementapp.entity.QuantityModel;
 import com.apps.quantitymeasurementapp.exception.CategoryMismatchException;
+import com.apps.quantitymeasurementapp.exception.DatabaseException;
 import com.apps.quantitymeasurementapp.exception.InvalidUnitException;
 import com.apps.quantitymeasurementapp.exception.InvalidUnitMeasurementException;
 import com.apps.quantitymeasurementapp.exception.QuantityMeasurementException;
 import com.apps.quantitymeasurementapp.quantity.Quantity;
 import com.apps.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
+import com.apps.quantitymeasurementapp.repository.QuantityMeasurementDatabaseRepository;
 import com.apps.quantitymeasurementapp.unit.IMeasurable;
 import com.apps.quantitymeasurementapp.unit.LengthUnit;
 import com.apps.quantitymeasurementapp.unit.TemperatureUnit;
@@ -19,7 +23,6 @@ import com.apps.quantitymeasurementapp.unit.WeightUnit;
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService{
 	
 	private IQuantityMeasurementRepository repository;
-	
 	//constructor
 	public QuantityMeasurementServiceImpl(IQuantityMeasurementRepository repository) {
 		this.repository = repository;
@@ -183,13 +186,24 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				d1.getValue(), 
 				d1.getUnit(),
 				d1.getMeasurementType(), 
-				d2.getValue(), d2.getUnit(), 
+				d2.getValue(), 
+				d2.getUnit(), 
 				d2.getMeasurementType(), 
 				opType.name(), 
 				resVal, 
 				resUnit,
-				d1.getMeasurementType());
+				d1.getMeasurementType(),
+				null,
+				false,
+				null);
 		
+//		repository.save(entity);
+		try{
+			repository = QuantityMeasurementDatabaseRepository.getInstance();
+		}
+		catch(SQLException e) {
+			throw new DatabaseException("Data base issue!" + e.getMessage());
+		}
 		repository.save(entity);
 
 		// 5. Return
