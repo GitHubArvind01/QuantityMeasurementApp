@@ -54,6 +54,11 @@ public enum TemperatureUnit implements IMeasurable{
 	}
 	
 	@Override
+	public String getMeasurableType() {
+		return this.getClass().getSimpleName();
+	}
+	
+	@Override
 	public void validateOperationSupport(String operation) {
 		if(operation.equals("ADD") || operation.equals("DIVIDE") || operation.equals("SUBTRACT")) {
 			String message = this.name()+" does not support "+operation+" operations!";

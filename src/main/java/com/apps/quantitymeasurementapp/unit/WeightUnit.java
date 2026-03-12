@@ -33,4 +33,9 @@ public enum WeightUnit implements IMeasurable{
 	public String getUnitName() {
 		return WeightUnit.this.toString();
 	}
+	
+	@Override
+	public String getMeasurableType() {
+		return this.getClass().getSimpleName();
+	}
 }

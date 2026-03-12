@@ -34,4 +34,8 @@ public enum VolumeUnit implements IMeasurable{
 		return VolumeUnit.class.getName();
 	}
 	
+	@Override
+	public String getMeasurableType() {
+		return this.getClass().getSimpleName();
+	}
 }
