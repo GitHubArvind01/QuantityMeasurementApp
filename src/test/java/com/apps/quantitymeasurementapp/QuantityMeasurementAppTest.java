@@ -7,15 +7,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import com.apps.quantitymeasurementapp.controller.QuantityMeasurementController;
-import com.apps.quantitymeasurementapp.entity.QuantityDTO;
-import com.apps.quantitymeasurementapp.entity.QuantityModel;
-import com.apps.quantitymeasurementapp.exception.CategoryMismatchException;
-import com.apps.quantitymeasurementapp.exception.QuantityMeasurementException;
-import com.apps.quantitymeasurementapp.unit.IMeasurable;
-import com.apps.quantitymeasurementapp.unit.LengthUnit;
-import com.apps.quantitymeasurementapp.unit.VolumeUnit;
-import com.apps.quantitymeasurementapp.unit.WeightUnit;
+import com.app.quantitymeasurementapp.QuantityMeasurementApp;
+import com.app.quantitymeasurementapp.controller.QuantityMeasurementController;
+import com.app.quantitymeasurementapp.entity.QuantityDTO;
+import com.app.quantitymeasurementapp.entity.QuantityModel;
+import com.app.quantitymeasurementapp.exception.CategoryMismatchException;
+import com.app.quantitymeasurementapp.exception.QuantityMeasurementException;
+import com.app.quantitymeasurementapp.unit.IMeasurable;
+import com.app.quantitymeasurementapp.unit.LengthUnit;
+import com.app.quantitymeasurementapp.unit.VolumeUnit;
+import com.app.quantitymeasurementapp.unit.WeightUnit;
 
 public class QuantityMeasurementAppTest {
 	private final QuantityMeasurementController controller = QuantityMeasurementApp.getInstance().controller;
