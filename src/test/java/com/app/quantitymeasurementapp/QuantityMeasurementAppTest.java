@@ -1,4 +1,4 @@
-package com.apps.quantitymeasurementapp;
+package com.app.quantitymeasurementapp;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
