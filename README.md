@@ -311,3 +311,152 @@ Conversion requires formula-based transformation:
 - [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
+
+# 🏗 UC15 – N-Tier Architecture Refactoring
+📅 **09 March 2026**  
+🔖 **Branch:** `feature/UC15-NTierArchitectureRefactor`
+
+## 🎯 Objective
+Refactor the application into a **clean N-Tier Architecture** to improve:
+
+- Maintainability
+- Scalability
+- Testability
+- Separation of concerns
+
+---
+
+## 🏗 System Architecture
+
+```
+Presentation Layer
+       │
+       ▼
+Controller Layer
+       │
+       ▼
+Service Layer
+       │
+       ▼
+Repository Layer
+       │
+       ▼
+Database / Persistence
+```
+
+---
+
+## 📦 Project Layer Structure
+
+| Layer | Responsibility |
+|------|----------------|
+| **Controller** | Handles API requests and responses |
+| **Service** | Business logic and validation |
+| **DTO** | Data transfer between layers |
+| **Entity / Model** | Core domain representation |
+| **Repository** | Data persistence abstraction |
+
+---
+
+## 🧠 Concepts Implemented
+
+- N-Tier Architecture Principles
+- Data Transfer Objects (DTO)
+- Service Oriented Design
+- Dependency Injection Pattern
+- Error Handling as Data
+- Immutable Data Objects
+- Layered System Design
+
+---
+
+## ⚙ SOLID Principles Applied
+
+| Principle | Application |
+|----------|-------------|
+| **SRP** | Each layer has a single responsibility |
+| **OCP** | Easily extendable measurement units |
+| **LSP** | Unit implementations interchangeable |
+| **ISP** | Small measurable interfaces |
+| **DIP** | High level modules depend on abstractions |
+
+---
+
+## ✅ Implementation Highlights
+
+- Introduced **DTO layer for API communication**
+- Implemented **Service layer for business logic**
+- Created **Repository abstraction**
+- Applied **Dependency Injection**
+- Improved **testability and modularity**
+
+🔗 Repository  
+- [feature/UC15-NTierArchitectureRefactor](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC15-NTierArchitectureRefactor/src/main/java/com/apps/quantitymeasurementapp)
+
+---
+
+# 🗄 UC16 – JDBC Database Integration
+📅 **11 March 2026**  
+🔖 **Branch:** `feature/UC16-JDBCPersistence`
+
+## 🎯 Objective
+Enable **persistent storage of measurement data** using **JDBC and relational database design**.
+
+---
+
+## 🧠 Technologies Used
+
+- Java JDBC
+- Maven Dependency Management
+- SQL Database
+- Connection Pooling
+- Prepared Statements
+
+---
+
+## 🗄 Database Schema
+
+```
+users
+ ├── id
+ ├── name
+ ├── email
+
+measurements
+ ├── id
+ ├── value
+ ├── unit
+ ├── category
+
+measurement_units
+ ├── id
+ ├── unit_name
+ ├── conversion_factor
+```
+
+---
+
+## ⚙ Core Concepts Applied
+
+- JDBC Connection Handling
+- Connection Pooling
+- Parameterized SQL Queries
+- Resource Management
+- Transaction Handling
+- Exception Hierarchy
+- Configuration Management
+
+---
+
+## ✅ Implementation
+
+- Integrated **JDBC persistence layer**
+- Implemented **Connection Pool**
+- Used **Prepared Statements for security**
+- Created **Repository layer for database operations**
+- Applied **SQL best practices**
+
+🔗 Repository  
+- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC16-JDBCPersistence/src/main/java/com/apps/quantitymeasurementapp)
+
+---
