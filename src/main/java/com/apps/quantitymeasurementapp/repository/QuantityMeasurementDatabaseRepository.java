@@ -1,10 +1,12 @@
 package com.apps.quantitymeasurementapp.repository;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -144,33 +146,36 @@ public class QuantityMeasurementDatabaseRepository implements IQuantityMeasureme
 	
 	/*
 	* Retrieves all QuantityMeasurementEntity instances from the database. This method executes a
-	* SQL query to select all records from the quantity_measurement_entity table, ordered by
-	* creation date in descending order. It uses a statement to execute the query and maps the
-	* result set to a list of QuantityMeasurementEntity objects. The method includes error handling
-	* to catch any SQL exceptions that may occur during the database interaction and rethrows them
-	* as DatabaseException with a meaningful message. Finally, it ensures that all database
-	* resources are properly closed to prevent leaks. Logging is included to track the number of
-	* measurements retrieved and any errors that occur during the operation.
-	@return a list of all QuantityMeasurementEntity instances retrieved from the database
 	*/
 	
 	@Override
 	public List<QuantityMeasurementEntity> getAllMeasurements(){
-		return null;
+		Connection con = null;
+		PreparedStatement statement = null;
+		
+		List<QuantityMeasurementEntity> result = new ArrayList<>();
+		
+		try {
+			con = connectionPool.getConnection();
+			statement = con.prepareStatement(SELECT_ALL_QUERY);
+			
+			ResultSet res = statement.executeQuery();
+			
+			while(res.next()) {
+				result.add(mapResultSetToEntity(res));
+			}
+		}
+		catch(SQLException e) {
+			logger.severe("Error saving measurement: " + e.getMessage());
+		}
+		finally {
+	        closeResources(statement, con);
+	    }
+		return result;
 	}
 	
 	/**
 	* Get measurements by operation type. This method retrieves all quantity measurement
-	* entities from the database that match the specified operation type (e.g., "Addition",
-	* "Subtraction", "Multiplication", "Division"). It uses a prepared statement to execute
-	* the query and maps the result set to a list of QuantityMeasurementEntity objects.
-	* The method also includes error handling to catch any SQL exceptions that may occur
-	* during the database interaction and rethrows them as DatabaseException with a
-	* meaningful message. Finally, it ensures that all database resources are properly closed
-	* to prevent leaks.
-
-	* @param operation the type of operation to filter measurements by (e.g., "Addition")
-	* @return a list of QuantityMeasurementEntity objects that match the specified operation type
 	*/
 	public List<QuantityMeasurementEntity> getMeasurementsByOperation(String operation){
 		return null;
@@ -178,18 +183,6 @@ public class QuantityMeasurementDatabaseRepository implements IQuantityMeasureme
 	
 	/**
 	* Get measurements by measurement type (Length, Weight, Volume, Temperature).
-	* This method retrieves all quantity measurement entities from the database that
-	* match the specified measurement type (e.g., "Length", "Weight", "Volume",
-	* "Temperature"). It uses a prepared statement to execute the query and maps the
-	* result set to a list of QuantityMeasurementEntity objects. The method also
-	* includes error handling to catch any SQL exceptions that may occur during
-	* the database interaction and rethrows them as DatabaseException. Finally, it
-	* ensures that all database resources are properly closed to prevent leaks.
-
-	* @param measurementType the type of measurement to filter by (e.g., "Length",
-	* "Weight", "Volume", "Temperature")
-	* @return a list of QuantityMeasurementEntity objects that match the specified
-	* measurement type
 	*/
 	
 	public List<QuantityMeasurementEntity> getMeasurementsByType(String measurementType){
@@ -198,84 +191,117 @@ public class QuantityMeasurementDatabaseRepository implements IQuantityMeasureme
 
 	/**
 	* Get count of all measurements. This method executes a SQL query to count the
-	* total number of quantity measurement entities in the database. It uses a statement
-	* to execute the COUNT query and retrieves the result from the result set. The method
-	* includes error handling to catch any SQL exceptions that may occur during the
-	* database interaction and rethrows them as DatabaseException with a meaningful
-	* message. Finally, it ensures that all database resources are properly closed to
-	* prevent leaks.
-
-	* @return the total count of quantity measurement entities in the database
 	*/
 	
 	public int getTotalCount() {
-		return 0;
+
+	    Connection conn = null;
+	    Statement stmt = null;
+	    ResultSet rs = null;
+
+	    try {
+
+	        conn = connectionPool.getConnection();
+	        stmt = conn.createStatement();
+	        rs = stmt.executeQuery(COUNT_QUERY);
+
+	        if (rs.next()) {
+	            return rs.getInt(1);
+	        }
+
+	    } catch (SQLException e) {
+
+	        logger.severe("Error counting measurements: " + e.getMessage());
+
+	    } finally {
+
+	        closeResources(rs, stmt, conn);
+	    }
+
+	    return 0;
 	}
 	
 	/**
 	* Delete all measurements (useful for testing). This method executes a SQL query
-	* to delete all quantity measurement entities from the database. It uses a statement
-	* to execute the DELETE query and includes error handling to catch any SQL exceptions
-	* that may occur during the database interaction, rethrowing them as DatabaseException
-	* with a meaningful message. Finally, it ensures that all database resources are
-	* properly closed to prevent leaks. This method is particularly useful for testing
-	* purposes to reset the state of the database before running test cases.
-	*
-	* Note: Use this method with caution in a production environment as it will permanently
-	* delete all measurement data from the database. It is recommended to use this method
-	* only in a testing context or with appropriate safeguards in place to prevent accidental data loss.
+	* 
 	*/
 	public void deleteAll() {
-		
-	}
 
-	/**
-	* Get pool statistics. This method provides insights into the current state of
-	* the connection pool, such as the number of available and used connections.
-	*
-	* This can be useful for monitoring and debugging database connection issues. The
-	* method can be overridden by repository implementations that utilize connection
-	* pooling to provide specific pool statistics, while other implementations can
-	* simply return a default message indicating that pool statistics are not available.
-	*/
+	    Connection conn = null;
+	    Statement stmt = null;
+
+	    try {
+
+	        conn = connectionPool.getConnection();
+	        stmt = conn.createStatement();
+	        stmt.executeUpdate(DELETE_ALL_QUERY);
+
+	        logger.info("All measurements deleted");
+
+	    } catch (SQLException e) {
+
+	        logger.severe("Error deleting measurements: " + e.getMessage());
+
+	    } finally {
+
+	        closeResources(stmt, conn);
+	    }
+	}
 	
 	public String getPoolStatistics() {
-		return null;
-	}
-	
-	/**
-	* Release resources held by the repository, such as closing database connections or
-	* clearing caches. This method can be implemented by repository implementations that
-	* manage resources to ensure proper cleanup when the repository is no longer needed.
-	*/
-	public void releaseResources () {
-		
+
+	    return "Available Connections: "
+	            + connectionPool.getAvailableConnectionCount()
+	            + ", Used Connections: "
+	            + connectionPool.getUsedConnectionCount()
+	            + ", Total: "
+	            + connectionPool.getTotalConnectionCount();
 	}
 
 	/**
 	* Map ResultSet row to QuantityMeasurementEntity
 	*/
 	private QuantityMeasurementEntity mapResultSetToEntity(ResultSet rs) {
-		return null;
+
+	    try {
+	        QuantityMeasurementEntity entity = new QuantityMeasurementEntity(rs.getDouble("this_value"), rs.getString("this_unit"), rs.getString("this_measurement_type"), rs.getDouble("that_value"), rs.getString("that_unit"), rs.getString("that_measurement_type"), rs.getString("operation"), rs.getDouble("result_value"), rs.getString("result_unit"), rs.getString("result_measurement_type"), rs.getString("result_string"), rs.getBoolean("is_error"), rs.getString("error_message"));
+	        return entity;
+
+	    } catch (SQLException e) {
+	        logger.severe("Error mapping result set: " + e.getMessage());
+	        return null;
+	    }
 	}
 
 	/**
 	* Release connection back to pool
 	*/
 	private void closeResources(ResultSet rs, Statement stmt, Connection conn) {
-		
+
+	    try {
+
+	        if (rs != null) rs.close();
+	        if (stmt != null) stmt.close();
+
+	        if (conn != null) connectionPool.releaseConnection(conn);
+
+	    } catch (Exception e) {
+
+	        logger.warning("Error closing resources: " + e.getMessage());
+	    }
 	}
 
-	/**
-	* Release connection and statement back to pool
-	*/
 	private void closeResources(Statement stmt, Connection conn) {
-		
-	}
 
-	// Main method for testing purposes
-	public static void main(String[] args) {
-		
+	    try {
+
+	        if (stmt != null) stmt.close();
+
+	        if (conn != null) connectionPool.releaseConnection(conn);
+
+	    } catch (Exception e) {
+
+	        logger.warning("Error closing resources: " + e.getMessage());
+	    }
 	}
-	
 }
