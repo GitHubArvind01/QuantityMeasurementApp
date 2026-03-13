@@ -18,7 +18,7 @@ This project was implemented incrementally using:
 ---
 
 # 🗄 UC16 – JDBC Database Integration
-📅 **27 Feb 2026**  
+📅 **11 March 2026**  
 🔖 **Branch:** `feature/UC16-JDBCPersistence`
 
 ## 🎯 Objective
@@ -79,6 +79,6 @@ measurement_units
 - Applied **SQL best practices**
 
 🔗 Repository  
-- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC16-JDBCPersistence/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
