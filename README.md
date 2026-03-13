@@ -17,32 +17,68 @@ This project was implemented incrementally using:
 
 ---
 
-## 📅 24 Feb 2026  
-### 🔹 UC14 – Temperature Measurement with Selective Arithmetic Support & Measurable Refactoring  
-**Branch:**  `feature/UC14-TemperatureMeasurementwithSelectiveArithmetic`
+# 🗄 UC16 – JDBC Database Integration
+📅 **27 Feb 2026**  
+🔖 **Branch:** `feature/UC16-JDBCPersistence`
 
-### 🎯 Objective
-- Add Temperature measurement category  
-- Support Celsius & Fahrenheit  
-- Restrict invalid arithmetic operations  
-- Refactor measurable behavior  
+## 🎯 Objective
+Enable **persistent storage of measurement data** using **JDBC and relational database design**.
 
-### ⚠ Special Challenge
-Temperature is **not purely linear like length or weight**  
-Conversion requires formula-based transformation:
-- °F = (°C × 9/5) + 32  
+---
 
-### ✅ Implementation
-- Created `TemperatureUnit` enum  
-- Implemented formula-based conversion logic  
-- Allowed equality comparison  
-- Restricted unsupported arithmetic (e.g., adding two temperatures directly)  
-- Applied measurable abstraction refactoring  
+## 🧠 Technologies Used
 
-### 🧠 Architectural Enhancement
-- Introduced selective arithmetic capability  
-- Improved domain modeling  
-- Applied behavior-driven restrictions  
-- [feature/UC14-TemperatureMeasurementwithSelectiveArithmetic](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src/main/java/com/apps/quantitymeasurementapp)
+- Java JDBC
+- Maven Dependency Management
+- SQL Database
+- Connection Pooling
+- Prepared Statements
+
+---
+
+## 🗄 Database Schema
+
+```
+users
+ ├── id
+ ├── name
+ ├── email
+
+measurements
+ ├── id
+ ├── value
+ ├── unit
+ ├── category
+
+measurement_units
+ ├── id
+ ├── unit_name
+ ├── conversion_factor
+```
+
+---
+
+## ⚙ Core Concepts Applied
+
+- JDBC Connection Handling
+- Connection Pooling
+- Parameterized SQL Queries
+- Resource Management
+- Transaction Handling
+- Exception Hierarchy
+- Configuration Management
+
+---
+
+## ✅ Implementation
+
+- Integrated **JDBC persistence layer**
+- Implemented **Connection Pool**
+- Used **Prepared Statements for security**
+- Created **Repository layer for database operations**
+- Applied **SQL best practices**
+
+🔗 Repository  
+- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC14-TemperatureMeasurementwithSelectiveArithmetic/src/main/java/com/apps/quantitymeasurementapp)
 
 ---
