@@ -79,6 +79,6 @@ measurement_units
 - Applied **SQL best practices**
 
 🔗 Repository  
-- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC16-JDBCPersistence/src/main/java/com/apps/quantitymeasurementapp)
+- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC16-JDBCPersistence/src/main/java/com/app/quantitymeasurementapp)
 
 ---
