@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import com.app.quantitymeasurementapp.controller.QuantityMeasurementController;
-import com.app.quantitymeasurementapp.entity.QuantityDTO;
+import com.app.quantitymeasurementapp.model.QuantityDTO;
+import com.app.quantitymeasurementapp.entity.QuantityMeasurementDTO;
 import com.app.quantitymeasurementapp.entity.QuantityModel;
 import com.app.quantitymeasurementapp.exception.CategoryMismatchException;
 import com.app.quantitymeasurementapp.exception.QuantityMeasurementException;
@@ -94,8 +96,7 @@ private final QuantityMeasurementController controller;
         QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
         QuantityDTO q2 = new QuantityDTO(1.0, LengthUnit.FEET);
 
-        boolean result = controller.performComparison(q1, q2);
-
+        boolean result = (controller.performComparison(q1, q2)).getBody().isError();
         assertTrue(result);
     }
 
@@ -104,7 +105,7 @@ private final QuantityMeasurementController controller;
         QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
         QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
 
-        boolean result = controller.performComparison(q1, q2);
+        boolean result = controller.performComparison(q1, q2).getBody().isError();
 
         assertTrue(result);
     }
@@ -128,11 +129,11 @@ private final QuantityMeasurementController controller;
         QuantityDTO source = new QuantityDTO(1.0, LengthUnit.FEET);
         QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
 
-        QuantityDTO result = controller.performConversion(source, target);
+        ResponseEntity<QuantityMeasurementDTO> result = controller.performConversion(source, target);
 
-        assertEquals(12.0, result.getValue(), 0.01);
-        assertEquals("INCHES", result.getUnit());
-        assertEquals("LengthUnit", result.getMeasurementType());
+        assertEquals(12.0, result.getBody().resultValue, 0.01);
+        assertEquals("INCHES", result.getBody().resultUnit);
+        assertEquals("LengthUnit", result.getBody().resultMeasurementType);
     }
 
     // ----------------------------------------------------
@@ -146,11 +147,11 @@ private final QuantityMeasurementController controller;
         QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
         QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
 
-        QuantityDTO result = controller.performAddition(q1, q2, target);
+        ResponseEntity<QuantityMeasurementDTO> result = controller.performAddition(q1, q2, target);
 
-        assertEquals(24.0, result.getValue(), 0.01);
-        assertEquals("INCHES", result.getUnit());
-        assertEquals("LengthUnit", result.getMeasurementType());
+        assertEquals(24.0, result.getBody().resultValue, 0.01);
+        assertEquals("INCHES", result.getBody().resultUnit);
+        assertEquals("LengthUnit", result.getBody().resultMeasurementType);
     }
 
     @Test
@@ -174,11 +175,11 @@ private final QuantityMeasurementController controller;
         QuantityDTO q2 = new QuantityDTO(2000.0, WeightUnit.GRAM);
         QuantityDTO target = new QuantityDTO(0.0, WeightUnit.GRAM);
 
-        QuantityDTO result = controller.performSubtraction(q1, q2, target);
+        ResponseEntity<QuantityMeasurementDTO> result = controller.performSubtraction(q1, q2, target);
 
-        assertEquals(3000.0, result.getValue(), 0.01);
-        assertEquals("GRAM", result.getUnit());
-        assertEquals("WeightUnit", result.getMeasurementType());
+        assertEquals(3000.0, result.getBody().resultValue, 0.01);
+        assertEquals("GRAM", result.getBody().resultUnit);
+        assertEquals("WeightUnit", result.getBody().resultMeasurementType);
     }
 
     // ----------------------------------------------------
@@ -190,7 +191,7 @@ private final QuantityMeasurementController controller;
         QuantityDTO q1 = new QuantityDTO(2.0, VolumeUnit.LITRE);
         QuantityDTO q2 = new QuantityDTO(1000.0, VolumeUnit.MILLILITRE);
 
-        double result = controller.performDivision(q1, q2);
+        double result = controller.performDivision(q1, q2).getBody().resultValue;
         assertEquals(2.0, result, 0.01);
     }
 
@@ -234,15 +235,15 @@ private final QuantityMeasurementController controller;
     void testService_AllMeasurementCategories_CurrentlySupported() {
         assertTrue(controller.performComparison(
                 new QuantityDTO(1.0, LengthUnit.FEET),
-                new QuantityDTO(12.0, LengthUnit.INCHES)));
+                new QuantityDTO(12.0, LengthUnit.INCHES)).getBody().isError());
 
         assertTrue(controller.performComparison(
                 new QuantityDTO(1.0, WeightUnit.KILOGRAM),
-                new QuantityDTO(1000.0, WeightUnit.GRAM)));
+                new QuantityDTO(1000.0, WeightUnit.GRAM)).getBody().isError());
 
         assertTrue(controller.performComparison(
                 new QuantityDTO(1.0, VolumeUnit.LITRE),
-                new QuantityDTO(1000.0, VolumeUnit.MILLILITRE)));
+                new QuantityDTO(1000.0, VolumeUnit.MILLILITRE)).getBody().isError());
     }
 
     @Test
