@@ -1,108 +1,165 @@
 package com.app.quantitymeasurementapp.entity;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class QuantityMeasurementEntity implements java.io.Serializable{
+import jakarta.persistence .*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+@Entity // Marks this class as a JPA entity
+@Table(name = "quantity_measurement_entity", indexes = {
+		@Index(name = "idx_operation", columnList = "operation"),
+		@Index(name ="idx_measurement_type", columnList = "this_measurement_type"),
+		@Index(name = "idx_created_at", columnList = "created_at")
+})
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class QuantityMeasurementEntity{
 	
-	public double thisValue;
-	public String thisUnit;
-	public String thisMeasurementType;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
-	public double thatValue;
-	public String thatUnit;
-	public String thatMeasurementType;
+	@Column(name="this_value", nullable = false)
+	private double thisValue;
+	
+	@Column(name="this_unit", nullable = false)
+	private String thisUnit;
+	
+	@Column(name="this_measurement_type", nullable = false)
+	private String thisMeasurementType;
+	
+	@Column(name="that_value", nullable = false)
+	private double thatValue;
+	
+	@Column(name="that_unit", nullable = false)
+	private String thatUnit;
+	
+	@Column(name="that_measurement_type", nullable = false)
+	private String thatMeasurementType;
 
 	// e.g., "COMPARE", "CONVERT", "ADD", "SUBTRACT", "DIVIDE"
-	public String operation;
-	public double resultValue;
-	public String resultUnit;
-	public String resultMeasurementType;
+	@Column(name="operation", nullable = false)
+	private String operation;
+	
+	@Column(name="result_Value", nullable = false)
+	private double resultValue;
+	
+	@Column(name="result_unit", nullable = false)
+	private String resultUnit;
+	
+	@Column(name="result_measurement_type", nullable = false)
+	private String resultMeasurementType;
 	
 	//For comparison Equals or not
-	public String resultString;
+	@Column(name="result_string", nullable = false)
+	private String resultString;
 	
 	//Error handling
-	public boolean isError;
-	public String errorMessage;
+	@Column(name="is_error", nullable = false)
+	private boolean isError;
+	
+	@Column(name="error_message", nullable = false)
+	private String errorMessage;
+	
+	@Column(name = "created_at", nullable = false, updatable = false)
+	private LocalDateTime createdAt;
+
+	@Column(name = "updated_at", nullable = false)
+	private LocalDateTime updatedAt;
+	
+	@PrePersist
+	protected void onCreate() {
+		createdAt = LocalDateTime.now();
+		updatedAt = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updatedAt = LocalDateTime.now();
+	}
 	
 	 /*
-     * Constructor for comparison or conversion operations
+     * Comparison / Conversion
      * Example: 1 ft == 12 in
      */
-    public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, String resultString) {
-        initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
-
-        this.resultString = resultString;
-        this.isError = false;
-    }
+	public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, String resultString) {
+			initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
+			
+			this.resultString = resultString;
+	}
 
 
     /*
-     * Constructor for arithmetic operations
+     * Arithmetic Operation
      * Example: 1 ft + 12 in = 2 ft
      */
-    public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, double resultValue, String resultUnit, String resultMeasurementType) {
-        initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
-
-        this.resultValue = resultValue;
-        this.resultUnit = resultUnit;
-        this.resultMeasurementType = resultMeasurementType;
-        this.isError = false;
-    }
+	public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, double resultValue, String resultUnit, String resultMeasurementType) {
+			initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
+			
+			this.resultValue = resultValue;
+			this.resultUnit = resultUnit;
+			this.resultMeasurementType = resultMeasurementType;
+	}
     
-    public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, double resultValue, String resultUnit, String resultMeasurementType, String resultString, boolean isError, String errorMessage) {
-        initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
-        this.resultValue = resultValue;
-        this.resultUnit = resultUnit;
-        this.resultMeasurementType = resultMeasurementType;
+	/*
+	 * Numeric Result Only(division result)
+	 * Example: 2 ft / 24 in = 0 ft
+	 */
+	public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, double resultValue) {
+			initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
 
-        this.resultString = resultString;
-
-        this.isError = isError;
-        this.errorMessage = errorMessage;
-    }
-
-
-    /*
-     * Constructor when result is only a numeric value
-     */
-    public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, double resultValue) {
-        initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
-
-        this.resultValue = resultValue;
-        this.isError = false;
-    }
-
+			this.resultValue = resultValue;
+	}
 
     /*
      * Constructor for error cases
      */
-    public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, String errorMessage, boolean isError) {
-        initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
+	public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation, String errorMessage, boolean isError) {
+			initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
+			
+			this.isError = isError;
+			this.errorMessage = errorMessage;
+	}
 
-        this.errorMessage = errorMessage;
-        this.isError = isError;
-    }
-
-
+	/*
+	 * Full Constructor
+	 */
+	public QuantityMeasurementEntity(double thisValue, String thisUnit, String thisMeasurementType,double thatValue, String thatUnit, String thatMeasurementType, String operation, double resultValue, String resultUnit, String resultMeasurementType, String resultString, boolean isError, String errorMessage) {
+			initializeCommonFields(thisValue, thisUnit, thisMeasurementType, thatValue, thatUnit, thatMeasurementType, operation);
+			
+			this.resultValue = resultValue;
+			this.resultUnit = resultUnit;
+			this.resultMeasurementType = resultMeasurementType;
+			this.resultString = resultString;
+			this.isError = isError;
+			this.errorMessage = errorMessage;
+	}
+	
     /*
-     * Common initializer used by constructors
+     * Common Field Initializer
      */
     private void initializeCommonFields(double thisValue, String thisUnit, String thisMeasurementType, double thatValue, String thatUnit, String thatMeasurementType, String operation) {
-        this.thisValue = thisValue;
-        this.thisUnit = thisUnit;
-        this.thisMeasurementType = thisMeasurementType;
-
-        this.thatValue = thatValue;
-        this.thatUnit = thatUnit;
-        this.thatMeasurementType = thatMeasurementType;
-
-        this.operation = operation;
+		this.thisValue = thisValue;
+		this.thisUnit = thisUnit;
+		this.thisMeasurementType = thisMeasurementType;
+		
+		this.thatValue = thatValue;
+		this.thatUnit = thatUnit;
+		this.thatMeasurementType = thatMeasurementType;
+		
+		this.operation = operation;
+		
+		// default values
+		this.resultValue = 0;
+		this.resultUnit = "";
+		this.resultMeasurementType = "";
+		this.resultString = "";
+		this.isError = false;
+		this.errorMessage = "";
     }
     
     @Override
