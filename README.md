@@ -17,68 +17,68 @@ This project was implemented incrementally using:
 
 ---
 
-# 🗄 UC16 – JDBC Database Integration
-📅 **11 March 2026**  
-🔖 **Branch:** `feature/UC16-JDBCPersistence`
+# 🌱 UC17 – Spring Boot Backend
+📅 **12 Mar 2026**  
+🔖 **Branch:** `feature/UC17-SpringBackend`
 
 ## 🎯 Objective
-Enable **persistent storage of measurement data** using **JDBC and relational database design**.
+Develop a **Spring Boot backend API** for quantity measurement services.
 
 ---
 
-## 🧠 Technologies Used
+## 🧠 Spring Concepts Used
 
-- Java JDBC
-- Maven Dependency Management
-- SQL Database
-- Connection Pooling
-- Prepared Statements
+- Spring Framework
+- Spring Boot
+- Spring MVC
+- REST API Development
+- Dependency Injection
+- Spring Service Layer
+- Logging Framework
+- Spring Data JPA
 
 ---
 
-## 🗄 Database Schema
+## 🏗 Backend Architecture
 
 ```
-users
- ├── id
- ├── name
- ├── email
-
-measurements
- ├── id
- ├── value
- ├── unit
- ├── category
-
-measurement_units
- ├── id
- ├── unit_name
- ├── conversion_factor
+Client Request
+      │
+      ▼
+REST Controller
+      │
+      ▼
+Service Layer
+      │
+      ▼
+Repository Layer
+      │
+      ▼
+Database
 ```
 
 ---
 
-## ⚙ Core Concepts Applied
+## 📦 Core Components
 
-- JDBC Connection Handling
-- Connection Pooling
-- Parameterized SQL Queries
-- Resource Management
-- Transaction Handling
-- Exception Hierarchy
-- Configuration Management
+| Component | Role |
+|----------|------|
+| Controller | REST API endpoints |
+| Service | Business logic |
+| Repository | Data persistence |
+| Entity | JPA domain objects |
 
 ---
 
 ## ✅ Implementation
 
-- Integrated **JDBC persistence layer**
-- Implemented **Connection Pool**
-- Used **Prepared Statements for security**
-- Created **Repository layer for database operations**
-- Applied **SQL best practices**
+- Created **Spring Boot application**
+- Developed **RESTful APIs**
+- Implemented **Service and Repository layers**
+- Integrated **Spring Data JPA**
+- Added **structured logging**
 
 🔗 Repository  
-- [feature/UC16-JDBCPersistence](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC16-JDBCPersistence/src/main/java/com/app/quantitymeasurementapp)
+- [feature/UC17-SpringBackend](https://github.com/GitHubArvind01/QuantityMeasurementApp/tree/feature/UC17-SpringBackend/src/main/java/com/app/quantitymeasurementapp)
 
 ---
