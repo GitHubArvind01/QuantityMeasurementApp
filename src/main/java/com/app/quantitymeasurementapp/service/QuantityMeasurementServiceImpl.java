@@ -1,7 +1,11 @@
 package com.app.quantitymeasurementapp.service;
 
-import com.app.quantitymeasurementapp.entity.QuantityDTO;
-import com.app.quantitymeasurementapp.entity.QuantityMeasurementEntity;
+import com.app.quantitymeasurementapp.model.QuantityDTO;
+import com.app.quantitymeasurementapp.model.QuantityMeasurementEntity;
+
+import org.springframework.stereotype.Service;
+
+import com.app.quantitymeasurementapp.entity.QuantityMeasurementDTO;
 import com.app.quantitymeasurementapp.entity.QuantityModel;
 import com.app.quantitymeasurementapp.exception.CategoryMismatchException;
 import com.app.quantitymeasurementapp.exception.InvalidUnitException;
@@ -15,7 +19,14 @@ import com.app.quantitymeasurementapp.unit.TemperatureUnit;
 import com.app.quantitymeasurementapp.unit.VolumeUnit;
 import com.app.quantitymeasurementapp.unit.WeightUnit;
 
+import java.util.List;
+import java.util.logging.*;
+@Service
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService{
+	// Logger for logging information and errors
+	private static final Logger logger = Logger.getLogger(
+	QuantityMeasurementServiceImpl.class.getName()
+	);
 	
 	private QuantityMeasurementRepository repository;
 	//constructor
@@ -28,7 +39,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	}
 
 	@Override
-	public boolean compare(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {		
+	public QuantityMeasurementDTO compare(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {		
 		// 1. Map
 		QuantityModel<IMeasurable> m1 = mapToModel(thisQuantityDTO);
 		QuantityModel<IMeasurable> m2 = mapToModel(thatQuantityDTO);
@@ -46,7 +57,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    // 4. Use the equals method from Quantity.java
 	    boolean isEqual = Double.compare(val1, val2)==0;
 	    
-	    // 5. Save to Repository (Audit Trail)
+	    // 5. Save to Repository
 	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
 	            thisQuantityDTO.getValue(), thisQuantityDTO.getUnit(), thisQuantityDTO.getMeasurementType(),
 	            thatQuantityDTO.getValue(), thatQuantityDTO.getUnit(), thatQuantityDTO.getMeasurementType(),
@@ -57,11 +68,11 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    );
 	    repository.save(entity);
 				
-        return isEqual;
+        return new QuantityMeasurementDTO().from(entity);
 	}
 	
 	@Override
-	public QuantityDTO convert(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {		
+	public QuantityMeasurementDTO convert(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {		
 		// 1. Map
 		QuantityModel<IMeasurable> m1 = mapToModel(thisQuantityDTO);
 		QuantityModel<IMeasurable> m2 = mapToModel(thatQuantityDTO);
@@ -71,32 +82,71 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    
 	    double value1 = q1.convertTo(m2.getUnit());
 	    
-	    return new QuantityDTO(value1, m2.getUnit());
+	    //4. save to repository
+	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
+	    			thisQuantityDTO.value,
+	    			thisQuantityDTO.unit,
+	    			thisQuantityDTO.measurementType,
+	    			thatQuantityDTO.value,
+	    			thatQuantityDTO.unit,
+	    			thatQuantityDTO.measurementType,
+	    			Operation.CONVERSION.name(),
+	    			value1,
+	    			thisQuantityDTO.unit,
+	    			thisQuantityDTO.measurementType,
+	    			String.valueOf(value1),
+	    			false,
+	    			null
+	    		);
+	    
+	    repository.save(entity);
+	    
+	    return new QuantityMeasurementDTO().from(entity);
 	}
 
 	@Override
-	public QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
+	public QuantityMeasurementDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
 		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.ADD);
 	}
 
 	@Override
-	public QuantityDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {
+	public QuantityMeasurementDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {
 		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.ADD_TO_TARGET);
 	}
 
 	@Override
-	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
+	public QuantityMeasurementDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
 		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.SUBTRACT);
 	}
 
 	@Override
-	public QuantityDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {;
+	public QuantityMeasurementDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {;
 		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.SUBTRACT_TO_TARGET);
 	}
 
 	@Override
-	public double divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, null, Operation.DIVIDE).getValue();
+	public QuantityMeasurementDTO divide(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, null, Operation.DIVIDE);
+	}
+	
+	@Override
+	public List<QuantityMeasurementDTO> getOperationHistory(String operation) {
+		return null;
+	}
+
+	@Override
+	public List<QuantityMeasurementDTO> getMeasurementsByType(String type) {
+		return null;
+	}
+
+	@Override
+	public long getOperationCount(String operation) {
+		return 0;
+	}
+
+	@Override
+	public List<QuantityMeasurementDTO> getErrorHistory() {
+		return null;
 	}
 	
 	  /**
@@ -146,7 +196,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
     /**
      * This will helper method reuse for all method 
      */
-    private QuantityDTO executeArithmetic(QuantityDTO d1, QuantityDTO d2, QuantityDTO target, Operation opType) {		
+    private QuantityMeasurementDTO executeArithmetic(QuantityDTO d1, QuantityDTO d2, QuantityDTO target, Operation opType) {		
 		// 1. Map
 		QuantityModel<IMeasurable> m1 = mapToModel(d1);
 		QuantityModel<IMeasurable> m2 = mapToModel(d2);
@@ -192,8 +242,8 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				false,
 				null);
 		repository.save(entity);
-
+		
 		// 5. Return
-		return new QuantityDTO(resVal, resUnit, d1.getMeasurementType());
+		return new QuantityMeasurementDTO().from(entity);
 	}
 }
