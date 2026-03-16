@@ -85,10 +85,10 @@
         
         <!-- Lombok for reducing boilerplate code -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <scope>provided</scope>
+		</dependency>
         
         <!-- Spring Boot Starter Test (includes JUnit 5, Mockito, MockBean, etc.) -->
         <dependency>
