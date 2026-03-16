@@ -1,19 +1,14 @@
 package com.app.quantitymeasurementapp.service;
 
-
-import java.sql.SQLException;
-
 import com.app.quantitymeasurementapp.entity.QuantityDTO;
 import com.app.quantitymeasurementapp.entity.QuantityMeasurementEntity;
 import com.app.quantitymeasurementapp.entity.QuantityModel;
 import com.app.quantitymeasurementapp.exception.CategoryMismatchException;
-import com.app.quantitymeasurementapp.exception.DatabaseException;
 import com.app.quantitymeasurementapp.exception.InvalidUnitException;
 import com.app.quantitymeasurementapp.exception.InvalidUnitMeasurementException;
 import com.app.quantitymeasurementapp.exception.QuantityMeasurementException;
 import com.app.quantitymeasurementapp.quantity.Quantity;
-import com.app.quantitymeasurementapp.repository.IQuantityMeasurementRepository;
-import com.app.quantitymeasurementapp.repository.QuantityMeasurementDatabaseRepository;
+import com.app.quantitymeasurementapp.repository.QuantityMeasurementRepository;
 import com.app.quantitymeasurementapp.unit.IMeasurable;
 import com.app.quantitymeasurementapp.unit.LengthUnit;
 import com.app.quantitymeasurementapp.unit.TemperatureUnit;
@@ -22,9 +17,9 @@ import com.app.quantitymeasurementapp.unit.WeightUnit;
 
 public class QuantityMeasurementServiceImpl implements IQuantityMeasurementService{
 	
-	private IQuantityMeasurementRepository repository;
+	private QuantityMeasurementRepository repository;
 	//constructor
-	public QuantityMeasurementServiceImpl(IQuantityMeasurementRepository repository) {
+	public QuantityMeasurementServiceImpl(QuantityMeasurementRepository repository) {
 		this.repository = repository;
 	}
 	
