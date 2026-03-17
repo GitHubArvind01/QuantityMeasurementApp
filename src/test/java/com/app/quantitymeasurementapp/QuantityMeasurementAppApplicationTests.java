@@ -10,13 +10,13 @@ import org.springframework.http.ResponseEntity;
 
 import com.app.quantitymeasurementapp.controller.QuantityMeasurementController;
 import com.app.quantitymeasurementapp.model.QuantityDTO;
+import com.app.quantitymeasurementapp.model.QuantityInputDTO;
 import com.app.quantitymeasurementapp.entity.QuantityMeasurementDTO;
 import com.app.quantitymeasurementapp.entity.QuantityModel;
 import com.app.quantitymeasurementapp.exception.CategoryMismatchException;
 import com.app.quantitymeasurementapp.exception.QuantityMeasurementException;
 import com.app.quantitymeasurementapp.unit.IMeasurable;
 import com.app.quantitymeasurementapp.unit.LengthUnit;
-import com.app.quantitymeasurementapp.unit.VolumeUnit;
 import com.app.quantitymeasurementapp.unit.WeightUnit;
 
 @SpringBootTest
@@ -40,7 +40,7 @@ private final QuantityMeasurementController controller;
 	
     @Test
     void testQuantityDTO_Constructor_WithIMeasurable() {
-        QuantityDTO dto = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityDTO dto = new QuantityDTO(1.0,"FEET","LengthUnit");
 
         assertEquals(1.0, dto.getValue());
         assertEquals("FEET", dto.getUnit());
@@ -93,30 +93,24 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_CompareEquality_SameUnit_Success() {
-        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
-        QuantityDTO q2 = new QuantityDTO(1.0, LengthUnit.FEET);
-
-        boolean result = (controller.performComparison(q1, q2)).getBody().isError();
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET", "LengthUnit"), new QuantityDTO(1.0, "FEET", "LengthUnit"), null);
+        boolean result = (controller.performComparison(qt)).getBody().isError();
         assertTrue(result);
     }
 
     @Test
     void testService_CompareEquality_DifferentUnit_Success() {
-        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
-        QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
-
-        boolean result = controller.performComparison(q1, q2).getBody().isError();
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(12.0, "INCHES","LengthUnit"), null);
+        boolean result = controller.performComparison(qt).getBody().isError();
 
         assertTrue(result);
     }
 
     @Test
     void testService_CompareEquality_CrossCategory_Error() {
-        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
-        QuantityDTO q2 = new QuantityDTO(1.0, VolumeUnit.LITRE);
-
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET", "LengthUnit"), new QuantityDTO(1.0, "LITRE", "VolumeUnit"),null);
         assertThrows(CategoryMismatchException.class, ()->{
-        		controller.performComparison(q1, q2);
+        		controller.performComparison(qt);
         });
     }
 
@@ -126,10 +120,8 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_Convert_Success() {
-        QuantityDTO source = new QuantityDTO(1.0, LengthUnit.FEET);
-        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
-
-        ResponseEntity<QuantityMeasurementDTO> result = controller.performConversion(source, target);
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(0.0, "INCHES","LengthUnit"), null);
+        ResponseEntity<QuantityMeasurementDTO> result = controller.performConversion(qt);
 
         assertEquals(12.0, result.getBody().resultValue, 0.01);
         assertEquals("INCHES", result.getBody().resultUnit);
@@ -143,11 +135,9 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_Add_WithTargetUnit_Success() {
-        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
-        QuantityDTO q2 = new QuantityDTO(12.0, LengthUnit.INCHES);
-        QuantityDTO target = new QuantityDTO(0.0, LengthUnit.INCHES);
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(12.0, "INCHES","LengthUnit"), new QuantityDTO(0.0, "INCHES","LengthUnit"));
 
-        ResponseEntity<QuantityMeasurementDTO> result = controller.performAddition(q1, q2, target);
+        ResponseEntity<QuantityMeasurementDTO> result = controller.performAdditionWithTargetUnit(qt);
 
         assertEquals(24.0, result.getBody().resultValue, 0.01);
         assertEquals("INCHES", result.getBody().resultUnit);
@@ -156,11 +146,9 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_Add_CrossCategory_Error() {
-        QuantityDTO q1 = new QuantityDTO(1.0, LengthUnit.FEET);
-        QuantityDTO q2 = new QuantityDTO(1.0, WeightUnit.KILOGRAM);
-
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(1.0, "KILOGRAM","WeightUnit"), null);
         assertThrows(CategoryMismatchException.class, ()->{
-            controller.performAddition(q1, q2);
+            controller.performAddition(qt);
         });
     }
 
@@ -170,12 +158,10 @@ private final QuantityMeasurementController controller;
 
 
     @Test
-    void testService_Subtract_WithTargetUnit_Success() {
-        QuantityDTO q1 = new QuantityDTO(5.0, WeightUnit.KILOGRAM);
-        QuantityDTO q2 = new QuantityDTO(2000.0, WeightUnit.GRAM);
-        QuantityDTO target = new QuantityDTO(0.0, WeightUnit.GRAM);
+    void testService_Subtract_WithTargetUnit_Success() { 
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(5.0, "KILOGRAM","WeightUnit"), new QuantityDTO(2000.0, "GRAM","WeightUnit"), new QuantityDTO(0.0, "GRAM", "WeightUnit"));
 
-        ResponseEntity<QuantityMeasurementDTO> result = controller.performSubtraction(q1, q2, target);
+        ResponseEntity<QuantityMeasurementDTO> result = controller.performSubtractionWithTargetUnit(qt);
 
         assertEquals(3000.0, result.getBody().resultValue, 0.01);
         assertEquals("GRAM", result.getBody().resultUnit);
@@ -188,20 +174,18 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_Divide_Success() {
-        QuantityDTO q1 = new QuantityDTO(2.0, VolumeUnit.LITRE);
-        QuantityDTO q2 = new QuantityDTO(1000.0, VolumeUnit.MILLILITRE);
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(2.0, "LITRE","VolumeUnit"), new QuantityDTO(1000.0, "MILLILITRE","VolumeUnit"), null);
 
-        double result = controller.performDivision(q1, q2).getBody().resultValue;
+        double result = controller.performDivision(qt).getBody().resultValue;
         assertEquals(2.0, result, 0.01);
     }
 
     @Test
     void testService_Divide_ByZero_Error() {
-        QuantityDTO q1 = new QuantityDTO(10.0, LengthUnit.FEET);
-        QuantityDTO q2 = new QuantityDTO(0, LengthUnit.FEET);
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(10.0, "FEET","LengthUnit"), new QuantityDTO(0, "FEET","LengthUnit"), null);
         
         assertThrows(ArithmeticException.class, ()->{
-        		controller.performDivision(q1, q2);
+        		controller.performDivision(qt);
         });
     }
 
@@ -211,19 +195,17 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_NullEntity_Rejection() {
-        QuantityDTO q = new QuantityDTO(1.0, LengthUnit.FEET);
+        QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(10.0, "FEET","LengthUnit"), null, null);
         assertThrows(QuantityMeasurementException.class, ()->{
-        		controller.performAddition(null, q);
+        		controller.performAddition(qt);
         });
     }
 
     @Test
-    void testService_ValidationConsistency() {
-        QuantityDTO q = new QuantityDTO(1.0, LengthUnit.FEET);
-
-        assertThrows(QuantityMeasurementException.class, () -> controller.performAddition(null, q));
-        assertThrows(QuantityMeasurementException.class, () -> controller.performAddition(null, q));
-        assertThrows(QuantityMeasurementException.class, () -> controller.performAddition(null, q));
+    void testService_ValidationConsistency() {        
+        assertThrows(QuantityMeasurementException.class, () -> controller.performAddition(new QuantityInputDTO(null, new QuantityDTO(10.0, "FEET","LengthUnit"), null)));
+        assertThrows(QuantityMeasurementException.class, () -> controller.performAddition(new QuantityInputDTO(new QuantityDTO(10.0, "FEET","LengthUnit"), null, null)));
+        assertThrows(QuantityMeasurementException.class, () -> controller.performAddition(new QuantityInputDTO(null, new QuantityDTO(10.0, "FEET","LengthUnit"), null)));
 
     }
 
@@ -234,24 +216,23 @@ private final QuantityMeasurementController controller;
     @Test
     void testService_AllMeasurementCategories_CurrentlySupported() {
         assertTrue(controller.performComparison(
-                new QuantityDTO(1.0, LengthUnit.FEET),
-                new QuantityDTO(12.0, LengthUnit.INCHES)).getBody().isError());
-
+                new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(12.0, "INCHES","LengthUnit"), null)
+                ).getBody().isError());
+        
         assertTrue(controller.performComparison(
-                new QuantityDTO(1.0, WeightUnit.KILOGRAM),
-                new QuantityDTO(1000.0, WeightUnit.GRAM)).getBody().isError());
-
+                new QuantityInputDTO(new QuantityDTO(1.0, "KILOGRAM","WeightUnit"), new QuantityDTO(1000.0, "GRAM","WeightUnit"), null)
+                ).getBody().isError());
+        
         assertTrue(controller.performComparison(
-                new QuantityDTO(1.0, VolumeUnit.LITRE),
-                new QuantityDTO(1000.0, VolumeUnit.MILLILITRE)).getBody().isError());
+                new QuantityInputDTO(new QuantityDTO(1.0, "LITRE","VolumeUnit"), new QuantityDTO(1000.0, "MILLILITRE","VolumeUnit"), null)
+                ).getBody().isError());
     }
 
     @Test
     void testService_Temperature_CurrentlyNotSupportedInService() {
         assertThrows(UnsupportedOperationException.class, ()->{
-        		QuantityDTO t1 = new QuantityDTO(0.0, "CELSIUS", "TemperatureUnit");
-            QuantityDTO t2 = new QuantityDTO(32.0, "FAHRENHEIT", "TemperatureUnit");
-        		controller.performDivision(t1, t2);
+            QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(0.0, "CELSIUS", "TemperatureUnit"), new QuantityDTO(32.0, "FAHRENHEIT", "TemperatureUnit"), null);
+        		controller.performDivision(qt);
         });
     }
 }
