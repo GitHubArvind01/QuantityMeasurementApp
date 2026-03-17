@@ -3,9 +3,13 @@ package com.app.quantitymeasurementapp.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema (example = """
 	{
 		"thisQuantityDTO":{ "value": 1.0, "unit": "FEET", "measurementType": "LengthUnit" },
