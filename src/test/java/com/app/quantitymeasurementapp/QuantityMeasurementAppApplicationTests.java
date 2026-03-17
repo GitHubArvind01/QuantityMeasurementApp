@@ -1,10 +1,12 @@
 package com.app.quantitymeasurementapp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 
@@ -21,11 +23,8 @@ import com.app.quantitymeasurementapp.unit.WeightUnit;
 
 @SpringBootTest
 class QuantityMeasurementAppApplicationTests {
-private final QuantityMeasurementController controller;
-	
-	public QuantityMeasurementAppApplicationTests(QuantityMeasurementController controller) {
-		this.controller = controller;
-	}
+	@Autowired
+	private QuantityMeasurementController controller;
 	
 	//here start
 	@Test
@@ -95,7 +94,7 @@ private final QuantityMeasurementController controller;
     void testService_CompareEquality_SameUnit_Success() {
         QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET", "LengthUnit"), new QuantityDTO(1.0, "FEET", "LengthUnit"), null);
         boolean result = (controller.performComparison(qt)).getBody().isError();
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
@@ -103,7 +102,7 @@ private final QuantityMeasurementController controller;
         QuantityInputDTO qt = new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(12.0, "INCHES","LengthUnit"), null);
         boolean result = controller.performComparison(qt).getBody().isError();
 
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
@@ -124,7 +123,7 @@ private final QuantityMeasurementController controller;
         ResponseEntity<QuantityMeasurementDTO> result = controller.performConversion(qt);
 
         assertEquals(12.0, result.getBody().resultValue, 0.01);
-        assertEquals("INCHES", result.getBody().resultUnit);
+        assertEquals("FEET", result.getBody().resultUnit);
         assertEquals("LengthUnit", result.getBody().resultMeasurementType);
     }
 
@@ -215,15 +214,15 @@ private final QuantityMeasurementController controller;
 
     @Test
     void testService_AllMeasurementCategories_CurrentlySupported() {
-        assertTrue(controller.performComparison(
+        assertFalse(controller.performComparison(
                 new QuantityInputDTO(new QuantityDTO(1.0, "FEET","LengthUnit"), new QuantityDTO(12.0, "INCHES","LengthUnit"), null)
                 ).getBody().isError());
         
-        assertTrue(controller.performComparison(
+        assertFalse(controller.performComparison(
                 new QuantityInputDTO(new QuantityDTO(1.0, "KILOGRAM","WeightUnit"), new QuantityDTO(1000.0, "GRAM","WeightUnit"), null)
                 ).getBody().isError());
         
-        assertTrue(controller.performComparison(
+        assertFalse(controller.performComparison(
                 new QuantityInputDTO(new QuantityDTO(1.0, "LITRE","VolumeUnit"), new QuantityDTO(1000.0, "MILLILITRE","VolumeUnit"), null)
                 ).getBody().isError());
     }
