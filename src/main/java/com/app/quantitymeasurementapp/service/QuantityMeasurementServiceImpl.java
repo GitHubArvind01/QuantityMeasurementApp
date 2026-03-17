@@ -59,13 +59,20 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    
 	    // 5. Save to Repository
 	    QuantityMeasurementEntity entity = new QuantityMeasurementEntity(
-	            thisQuantityDTO.getValue(), thisQuantityDTO.getUnit(), thisQuantityDTO.getMeasurementType(),
-	            thatQuantityDTO.getValue(), thatQuantityDTO.getUnit(), thatQuantityDTO.getMeasurementType(),
-	            Operation.COMPARISON.name(),
-	            isEqual ? 1.0 : 0.0, // Storing result as 1 for true, 0 for false
-	            "BOOLEAN",
-	            thisQuantityDTO.getMeasurementType()
-	    );
+    			thisQuantityDTO.value,
+    			thisQuantityDTO.unit,
+    			thisQuantityDTO.measurementType,
+    			thatQuantityDTO.value,
+    			thatQuantityDTO.unit,
+    			thatQuantityDTO.measurementType,
+    			Operation.COMPARISON.name(),
+    			isEqual ? 1.0 : 0.0,
+    			thisQuantityDTO.unit,
+    			thisQuantityDTO.measurementType,
+    			"null",
+    			false,
+    			"null"
+    		);
 	    repository.save(entity);
 				
         return new QuantityMeasurementDTO().from(entity);
@@ -94,9 +101,9 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    			value1,
 	    			thisQuantityDTO.unit,
 	    			thisQuantityDTO.measurementType,
-	    			String.valueOf(value1),
+	    			"null",
 	    			false,
-	    			null
+	    			"null"
 	    		);
 	    
 	    repository.save(entity);
@@ -238,9 +245,9 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 				resVal, 
 				resUnit,
 				d1.getMeasurementType(),
-				null,
+				"null",
 				false,
-				null);
+				"null");
 		repository.save(entity);
 		
 		// 5. Return
