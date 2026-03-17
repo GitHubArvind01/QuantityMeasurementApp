@@ -7,13 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.quantitymeasurementapp.entity.QuantityMeasurementDTO;
-import com.app.quantitymeasurementapp.model.QuantityDTO;
+import com.app.quantitymeasurementapp.model.QuantityInputDTO;
 import com.app.quantitymeasurementapp.service.IQuantityMeasurementService;
 import com.app.quantitymeasurementapp.service.QuantityMeasurementServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
+import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.logging.*;
@@ -66,6 +68,14 @@ public class QuantityMeasurementController {
 			"targetQuantityDTO": {"value":0.0, "unit":"INCHES", "measurementType":"LengthUnit"} 
 		}""";
 	
+	
+	/*
+	 * Welcome Get Mapping Testing
+	 */
+	@GetMapping()
+	public String welcome() {
+		return "Welcome! It is working";
+	}
 	@PostMapping("/compare")
 	@Operation(summary = "Compare two quantities",
 		requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -77,8 +87,8 @@ public class QuantityMeasurementController {
 			})
 		)
 	)
-	public ResponseEntity<QuantityMeasurementDTO> performComparison(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.compare(thisQuantityDTO, thatQuantityDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performComparison(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.compare(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO()));
 	}
 	
 	@PostMapping("/convert")
@@ -92,8 +102,8 @@ public class QuantityMeasurementController {
 			})
 		)
 	)
-	public ResponseEntity<QuantityMeasurementDTO> performConversion(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.convert(thisQuantityDTO, thatQuantityDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performConversion(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.convert(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO()));
 	}
 	
 	@PostMapping("/add")
@@ -107,8 +117,8 @@ public class QuantityMeasurementController {
 		)
 	)
 	
-	public ResponseEntity<QuantityMeasurementDTO> performAddition(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.add(thisQuantityDTO, thatQuantityDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performAddition(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.add(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO()));
 	}
 	
 	@PostMapping("/add-with-target-unit")
@@ -120,8 +130,8 @@ public class QuantityMeasurementController {
 		)
 	)
 	
-	public ResponseEntity<QuantityMeasurementDTO> performAddition(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO thatUnitDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.add(thisQuantityDTO, thatQuantityDTO, thatUnitDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performAdditionWithTargetUnit(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.add(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO(), quantityInputDTO.getTargetQuantityDTO()));
 	}
 	
 	@PostMapping("/subtract")
@@ -135,8 +145,8 @@ public class QuantityMeasurementController {
 		)
 	)
 	
-	public ResponseEntity<QuantityMeasurementDTO> performSubtraction(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.subtract(thisQuantityDTO, thatQuantityDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performSubtraction(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.subtract(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO()));
 	}
 	
 	@PostMapping("/subtract-with-target-unit")
@@ -148,8 +158,8 @@ public class QuantityMeasurementController {
 		)
 	)
 	
-	public ResponseEntity<QuantityMeasurementDTO> performSubtraction(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO thatUnitDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.subtract(thisQuantityDTO, thatQuantityDTO, thatUnitDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performSubtractionWithTargetUnit(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.subtract(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO(), quantityInputDTO.getTargetQuantityDTO()));
 	}
 	
 	@PostMapping("/divide")
@@ -163,8 +173,8 @@ public class QuantityMeasurementController {
 		)
 	)
 	
-	public ResponseEntity<QuantityMeasurementDTO> performDivision(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return ResponseEntity.ok(quantityMeasurementService.divide(thisQuantityDTO, thatQuantityDTO));
+	public ResponseEntity<QuantityMeasurementDTO> performDivision(@Valid @RequestBody QuantityInputDTO quantityInputDTO) {
+		return ResponseEntity.ok(quantityMeasurementService.divide(quantityInputDTO.getThisQuantityDTO(), quantityInputDTO.getThatQuantityDTO()));
 	}
 
 	@GetMapping("/history/operation/{operation}")
