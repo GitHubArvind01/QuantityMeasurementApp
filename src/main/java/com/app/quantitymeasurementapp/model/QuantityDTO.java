@@ -1,13 +1,13 @@
 package com.app.quantitymeasurementapp.model;
 
 import java.util.logging.Logger;
-import com.app.quantitymeasurementapp.unit.IMeasurable;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 interface IMeasurableUnit{
 	String getUnitName();
@@ -15,6 +15,8 @@ interface IMeasurableUnit{
 }
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "A quantity with a value and unit")
 public class QuantityDTO {
 
@@ -87,34 +89,10 @@ public class QuantityDTO {
 	public String unit;
 
 	@NotNull(message = "Measurement type cannot be null")
-	@Pattern(regexp = "LengthUnit | VolumeUnit | WeightUnit | TemperatureUnit", message = "Measurement type must be one of: LengthUnit, VolumeUnit, "
+	@Pattern(regexp = "(?i)LengthUnit|VolumeUnit|WeightUnit|TemperatureUnit", message = "Measurement type must be one of: LengthUnit, VolumeUnit, "
 			+ "WeightUnit, TemperatureUnit")
 	@Schema(example = "LengthUnit", allowableValues = { "LengthUnit", "VolumeUnit", "WeightUnit", "TemperatureUnit" })
 	public String measurementType;
-
-	public QuantityDTO(double value, IMeasurable unit) {
-		this.value = value;
-		this.unit = unit.getUnitName();
-		this.measurementType = unit.getMeasurableType();
-	}
-
-	public QuantityDTO(double value, String unit, String measurementType) {
-		this.value = value;
-		this.unit = unit;
-		this.measurementType = measurementType;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
-	public String getUnit() {
-		return unit;
-	}
-
-	public String getMeasurementType() {
-		return measurementType.replace("UNIT", "");
-	}
 
 	@AssertTrue(message = "Unit must be valid for the specified measurement type")
 	public boolean isValidUnit() {
@@ -140,10 +118,5 @@ public class QuantityDTO {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "QuantityDTO [value=" + value + ", unit=" + unit + ", measurementType=" + getMeasurementType() + "]";
 	}
 }
