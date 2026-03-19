@@ -151,7 +151,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	@Override
 	public long getOperationCount(String operation) {
 		validateOperation(operation);
-		return 0;
+		return repository.countByOperationAndIsErrorFalse(operation);
 	}
 
 	@Override
