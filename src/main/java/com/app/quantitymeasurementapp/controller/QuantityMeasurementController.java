@@ -2,6 +2,7 @@ package com.app.quantitymeasurementapp.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,10 +65,9 @@ public class QuantityMeasurementController {
 	private static final String EX_WITH_TARGET = """
 		{ 
 			"thisQuantityDTO": {"value":1.0, "unit":"FEET", "measurementType":"LengthUnit"},
-			"thatQuantityDTO": {"value": 12.0, "unit":"INCHES", "measurementType":"LengthUnit"}
+			"thatQuantityDTO": {"value": 12.0, "unit":"INCHES", "measurementType":"LengthUnit"},
 			"targetQuantityDTO": {"value":0.0, "unit":"INCHES", "measurementType":"LengthUnit"} 
 		}""";
-	
 	
 	/*
 	 * Welcome Get Mapping Testing
@@ -182,7 +182,7 @@ public class QuantityMeasurementController {
 		summary = "Get operation history",
 		description = "Valid operations: ADD, SUBTRACT, MULTIPLY, DIVIDE, CONVERT"
 	)
-	public ResponseEntity<List<QuantityMeasurementDTO>> getOperationHistory(String operation){
+	public ResponseEntity<List<QuantityMeasurementDTO>> getOperationHistory(@PathVariable String operation){
 		return ResponseEntity.ok(quantityMeasurementService.getOperationHistory(operation));
 	}
 	
@@ -192,7 +192,7 @@ public class QuantityMeasurementController {
 		summary = "Get operation history by type",
 		description = "Valid types: LengthUnit, VolumeUnit, WeightUnit, TemperatureUnit"
 	)
-	public ResponseEntity<List<QuantityMeasurementDTO>> getOperationHistoryByType(String type){
+	public ResponseEntity<List<QuantityMeasurementDTO>> getOperationHistoryByType(@PathVariable String type){
 		return ResponseEntity.ok(quantityMeasurementService.getMeasurementsByType(type));
 	}
 
@@ -203,7 +203,7 @@ public class QuantityMeasurementController {
 		description = "Valid operations: ADD, SUBTRACT, MULTIPLY, DIVIDE, CONVERT"
 	)
 	
-	public ResponseEntity<Long> getOperationCount(String operation){
+	public ResponseEntity<Long> getOperationCount(@PathVariable String operation){
 		return ResponseEntity.ok(quantityMeasurementService.getOperationCount(operation));
 	}
 	
