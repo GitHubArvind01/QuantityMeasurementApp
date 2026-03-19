@@ -35,7 +35,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	}
 	
 	private enum Operation {
-		COMPARISON, CONVERSION, ADD, ADD_TO_TARGET, SUBTRACT, SUBTRACT_TO_TARGET, DIVIDE;
+		ADD, SUBTRACT, MULTIPLY, DIVIDE, COMPARE, CONVERT;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    Quantity<IMeasurable> q2 = new Quantity<>(m2.getValue(), m2.getUnit());
 	    
 	    double val1 = q1.convertTo(q1.getUnit());
-	    double val2 = q2.convertTo(q2.getUnit());
+	    double val2 = q2.convertTo(q1.getUnit());
 	    
 	    // 4. Use the equals method from Quantity.java
 	    boolean isEqual = Double.compare(val1, val2)==0;
@@ -65,7 +65,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
     			thatQuantityDTO.value,
     			thatQuantityDTO.unit,
     			thatQuantityDTO.measurementType,
-    			Operation.COMPARISON.name(),
+    			Operation.COMPARE.name(),
     			isEqual ? 1.0 : 0.0,
     			thisQuantityDTO.unit,
     			thisQuantityDTO.measurementType,
@@ -97,7 +97,7 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	    			thatQuantityDTO.value,
 	    			thatQuantityDTO.unit,
 	    			thatQuantityDTO.measurementType,
-	    			Operation.CONVERSION.name(),
+	    			Operation.CONVERT.name(),
 	    			value1,
 	    			thisQuantityDTO.unit,
 	    			thisQuantityDTO.measurementType,
@@ -113,22 +113,22 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 
 	@Override
 	public QuantityMeasurementDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.ADD);
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, null, Operation.ADD);
 	}
 
 	@Override
 	public QuantityMeasurementDTO add(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {
-		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.ADD_TO_TARGET);
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.ADD);
 	}
 
 	@Override
 	public QuantityMeasurementDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO) {
-		return executeArithmetic(thatQuantityDTO, thisQuantityDTO, null, Operation.SUBTRACT);
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, null, Operation.SUBTRACT);
 	}
 
 	@Override
 	public QuantityMeasurementDTO subtract(QuantityDTO thisQuantityDTO, QuantityDTO thatQuantityDTO, QuantityDTO targetUnitDTO) {;
-		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.SUBTRACT_TO_TARGET);
+		return executeArithmetic(thisQuantityDTO, thatQuantityDTO, targetUnitDTO, Operation.SUBTRACT);
 	}
 
 	@Override
@@ -138,22 +138,25 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
 	
 	@Override
 	public List<QuantityMeasurementDTO> getOperationHistory(String operation) {
-		return null;
+		validateOperation(operation);
+		return new QuantityMeasurementDTO().fromList(repository.findByOperation(operation));
 	}
 
 	@Override
 	public List<QuantityMeasurementDTO> getMeasurementsByType(String type) {
-		return null;
+		validateTypes(type);
+		return new QuantityMeasurementDTO().fromList(repository.findByThisMeasurementType(type));
 	}
 
 	@Override
 	public long getOperationCount(String operation) {
+		validateOperation(operation);
 		return 0;
 	}
 
 	@Override
 	public List<QuantityMeasurementDTO> getErrorHistory() {
-		return null;
+		return new QuantityMeasurementDTO().fromList(repository.findAll());
 	}
 	
 	  /**
@@ -180,6 +183,43 @@ public class QuantityMeasurementServiceImpl implements IQuantityMeasurementServi
         		throw new InvalidUnitException("Unit '" + unitName + "' is not valid for " + type);
         	}
         return new QuantityModel<>(dto.getValue(), unit);
+    }
+    
+    /*
+     * Validate Operation
+     */
+    private void validateOperation(String operation) {
+    		try {
+	        	switch (operation) {
+	            case "ADD": break;
+	            case "SUBTRACT": break;
+	            case "COMPARE": break;
+	            case "CONVERT": break;
+	            case "DIVIDE": break;
+	            default: throw new UnsupportedOperationException("Invalid Operation: " + operation);
+	        }
+	    }
+	    catch(IllegalArgumentException e) {
+	    		throw new InvalidUnitException("Unit Type is not valid for");
+	    	}
+    }
+    
+    /*
+     * Validate Types
+     */
+    private void validateTypes(String type) {
+	    	try {
+	        	switch (type) {
+	            case "LengthUnit": break;
+	            case "VolumeUnit": break;
+	            case "WeightUnit": break;
+	            case "TemperatureUnit": break;
+	            default: throw new InvalidUnitMeasurementException("Invalid Measurement Category: " + type);
+	        }
+	    }
+	    catch(IllegalArgumentException e) {
+	    		throw new InvalidUnitException("Unit Type is not valid for");
+	    	}
     }
     
 
