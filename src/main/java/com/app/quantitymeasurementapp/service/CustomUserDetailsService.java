@@ -1,21 +1,22 @@
 package com.app.quantitymeasurementapp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.app.quantitymeasurementapp.model.User;
 import com.app.quantitymeasurementapp.repository.UserRepository;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService{
 
-    @Autowired
     private UserRepository repository;
+    
+    public CustomUserDetailsService(UserRepository repository) {
+		this.repository = repository;
+	}
 
-    @Override
-    public UserDetails loadUserByUsername(String email) {
+
+	public UserDetails loadUserByEmail(String email) {
 
         User user = repository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
