@@ -7,7 +7,7 @@ import com.app.quantitymeasurementapp.dto.dtoRequest.LoginRequest;
 import com.app.quantitymeasurementapp.dto.dtoRequest.RegisterRequest;
 import com.app.quantitymeasurementapp.dto.dtoResponse.AuthResponse;
 import com.app.quantitymeasurementapp.dto.dto_conversion.UserDTO;
-import com.app.quantitymeasurementapp.model.User;
+import com.app.quantitymeasurementapp.entity.User;
 import com.app.quantitymeasurementapp.repository.UserRepository;
 
 @Service

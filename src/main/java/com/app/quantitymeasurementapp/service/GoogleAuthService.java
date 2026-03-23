@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.app.quantitymeasurementapp.dto.dtoResponse.AuthResponse;
+import com.app.quantitymeasurementapp.entity.User;
 import com.app.quantitymeasurementapp.exception.UnauthorizedException;
-import com.app.quantitymeasurementapp.model.User;
 import com.app.quantitymeasurementapp.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;

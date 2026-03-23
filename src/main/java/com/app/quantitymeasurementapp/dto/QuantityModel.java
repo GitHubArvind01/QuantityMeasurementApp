@@ -1,4 +1,4 @@
-package com.app.quantitymeasurementapp.entity;
+package com.app.quantitymeasurementapp.dto;
 
 import com.app.quantitymeasurementapp.unit.IMeasurable;
 

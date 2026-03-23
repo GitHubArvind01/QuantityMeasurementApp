@@ -3,7 +3,7 @@ package com.app.quantitymeasurementapp.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.app.quantitymeasurementapp.model.User;
+import com.app.quantitymeasurementapp.entity.User;
 import com.app.quantitymeasurementapp.repository.UserRepository;
 
 @Service
