@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -26,6 +27,11 @@ public class SecurityConfig {
 	
 	private final JwtFilter jwtFilter;
 	
+	@Bean
+    RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+	
     @Bean
     PasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
@@ -37,7 +43,7 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable()) // - THIS IS KEY!
 				.exceptionHandling(exception-> exception.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
 				.authorizeHttpRequests(authz -> authz
-						.requestMatchers("/auth/user/**", "/swagger-ui/**", "/h2-console/**", "/v3/api-docs/**").permitAll()
+						.requestMatchers("/auth/**", "/swagger-ui/**", "/h2-console/**", "/v3/api-docs/**").permitAll()
 						.anyRequest().authenticated())
 						.sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
