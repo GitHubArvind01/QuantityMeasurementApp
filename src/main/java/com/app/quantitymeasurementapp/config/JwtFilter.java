@@ -15,8 +15,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtFilter extends OncePerRequestFilter{
 	
 	private JwtService jwtService;
@@ -38,20 +40,23 @@ public class JwtFilter extends OncePerRequestFilter{
 			throws ServletException, IOException {
 		
 		String authHeader = request.getHeader("Authorization");
-		String token = null;
-		String email = null;
-		
-		if(authHeader!=null && authHeader.startsWith("Bearer ")) {
-			token = authHeader.substring(7);
-			email = jwtService.extractEmail(token);
-		}
-		if(email!=null && SecurityContextHolder.getContext().getAuthentication()==null) {
-			var userDetails = userDetailsService.loadUserByEmail(email);
-			if(jwtService.validateToken(token, email)) {
-				UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-				authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContextHolder.getContext().setAuthentication(authToken);
+		try {
+			if(authHeader!=null && authHeader.startsWith("Bearer ")) {
+				String token = authHeader.substring(7);
+				String email = jwtService.extractEmail(token);
+			
+				if(email!=null && SecurityContextHolder.getContext().getAuthentication()==null) {
+					var userDetails = userDetailsService.loadUserByEmail(email);
+					if(jwtService.validateToken(token, email)) {
+						UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+						authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+						SecurityContextHolder.getContext().setAuthentication(authToken);
+					}
+				}
 			}
+		}
+		catch(Exception e) {
+			log.warn("Unauthorized attempt: {}", e.getMessage());
 		}
 		filterChain.doFilter(request, response);
 	}	
