@@ -35,7 +35,11 @@ main
       ├── feature/UC11-VolumeMeasurement
       ├── feature/UC12-SubtractionAndDivision
       ├── feature/UC13-CentralizedArithmeticLogic
-      └── feature/UC14-TemperatureMeasurementwithSelectiveArithmetic
+      ├── feature/UC14-TemperatureMeasurementwithSelectiveArithmetic
+      ├── feature/UC15-NTierArchitectureRefactor
+      ├── feature/UC16-JDBCPersistence
+      ├── feature/UC17-SpringBackend
+      └── feature/UC18-GoogleAuthUserManagement
 ```
 
 ---
@@ -528,7 +532,7 @@ Database
 ---
 
 # 🔐 UC18 – Google Authentication & User Management
-📅 **3 Mar 2026**  
+📅 **20 Mar 2026**  
 🔖 **Branch:** `feature/UC18-GoogleAuthUserManagement`
 
 ## 🎯 Objective
