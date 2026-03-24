@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
 
 import com.app.quantitymeasurementapp.dto.dtoResponse.AuthResponse;
@@ -49,12 +48,14 @@ public class GoogleAuthService {
 	@Autowired
 	private JwtService jwtService;
 	
-	@GetMapping("/callback")
 	public AuthResponse handleGoogleAuth(String code) {
 		try {
 			// 1. Exchange auth code for tokens
 			String tokenEndpoint = "https://oauth2.googleapis.com/token";
-
+			
+			/*
+			 * This params have application Owner - google credentials [When user hit login with google then this params and header go to authorization server to get access token]
+			 */
 			MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 			params.add("code", code);
 			params.add("client_id", clientId);
@@ -67,12 +68,26 @@ public class GoogleAuthService {
 			
 			HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(params, headers);
 			
+			/*
+			 * Here server hit the post request to google end point to get access token- 
+			 */
 			ResponseEntity<Map> tokenResponse = restTemplate.postForEntity(tokenEndpoint, request, Map.class);
 			
+			/*
+			 * Here - we get the access token - with this access token server can get details of user
+			 */
 			String idToken = (String)tokenResponse.getBody().get("id_token");
 			
+			/*
+			 * Here - this userInfor URL- help to get the user details - in this URL - we add the access token 
+			 */
 			String userInfoUrl = "https://oauth2.googleapis.com/tokeninfo?id_token=" + idToken;
+			
+			/*
+			 * Here - server again hit the get request to google server, but now they hit with access token, so now we get the entity details of user
+			 */
 			ResponseEntity<Map> userInfoResponse = restTemplate.getForEntity(userInfoUrl, Map.class);
+			
 			/*
 			 * Every things well here - means status code 200 - means token correct, userInfoUrl correct, and we got userResponse 
 			 */
