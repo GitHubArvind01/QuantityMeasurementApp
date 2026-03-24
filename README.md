@@ -18,7 +18,7 @@ This project was implemented incrementally using:
 ---
 
 # 🔐 UC18 – Google Authentication & User Management
-📅 **3 Mar 2026**  
+📅 **20 Mar 2026**  
 🔖 **Branch:** `feature/UC18-GoogleAuthUserManagement`
 
 ## 🎯 Objective
