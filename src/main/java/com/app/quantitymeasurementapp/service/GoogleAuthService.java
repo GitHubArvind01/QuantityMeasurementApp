@@ -3,7 +3,6 @@ package com.app.quantitymeasurementapp.service;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -26,27 +25,36 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class GoogleAuthService {
-	@Autowired
+public class GoogleAuthService {	
+	
 	private CustomUserDetailsService customUserDetailsService;
 	
-	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	@Autowired
 	private UserRepository userRepository;
 	
+	private RestTemplate restTemplate;
+
+	private JwtService jwtService;
+
+	
+	
+	public GoogleAuthService(CustomUserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder,
+			UserRepository userRepository, RestTemplate restTemplate, JwtService jwtService) {
+		this.customUserDetailsService = customUserDetailsService;
+		this.passwordEncoder = passwordEncoder;
+		this.userRepository = userRepository;
+		this.restTemplate = restTemplate;
+		this.jwtService = jwtService;
+	}
+
+
 	@Value("${spring.security.oauth2.client.registration.google.client-id}") 
 	private String clientId;
 
 	@Value("${spring.security.oauth2.client.registration.google.client-secret}")
 	private String clientSecret;
 	
-	@Autowired
-	private RestTemplate restTemplate;
-
-	@Autowired
-	private JwtService jwtService;
 	
 	public AuthResponse handleGoogleAuth(String code) {
 		try {
