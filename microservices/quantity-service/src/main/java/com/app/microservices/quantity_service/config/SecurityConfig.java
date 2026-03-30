@@ -16,7 +16,8 @@ public class SecurityConfig {
 			.csrf(csrf -> csrf.disable()) // - THIS IS KEY!
 			.authorizeHttpRequests(authz -> authz
 					.anyRequest().permitAll());
-		
+		// For H2 Console
+		http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
 		return http.build();
 	}
 }
