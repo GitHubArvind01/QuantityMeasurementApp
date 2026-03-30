@@ -26,6 +26,7 @@ Built using modern engineering practices:
 
 > 📷 Client & Server Communication via JWT secure 
 
+<img width="1536" height="1024" alt="d19994b0-ac4d-4275-ba3c-1be1ac7ce352" src="https://github.com/user-attachments/assets/ea90ad19-d906-4be6-b218-4324dc95af0e" />
 
 ---
 
