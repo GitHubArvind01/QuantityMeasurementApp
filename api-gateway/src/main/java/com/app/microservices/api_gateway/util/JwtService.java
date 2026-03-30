@@ -3,6 +3,7 @@ package com.app.microservices.api_gateway.util;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
@@ -12,7 +13,11 @@ import jakarta.annotation.PostConstruct;
 
 @Service
 public class JwtService {
-	private String SECRET = "bXlzZWNyZXRrZXlteXNlY3JldGtleW15c2VjcmV0a2V5MTI=";
+	@Value("${app.jwt.secret}")
+	private String SECRET;
+	@Value("${app.jwt.expiration-ms}")
+	private long expirationTime;
+	
 	private Key signingKey;
 	
 	@PostConstruct
