@@ -3,6 +3,7 @@ package com.app.microservices.auth_service.service;
 import java.security.Key;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Jwts;
@@ -11,8 +12,12 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 
 @Service
-public class JwtService {
-	private String SECRET = "bXlzZWNyZXRrZXlteXNlY3JldGtleW15c2VjcmV0a2V5MTI=";
+public class JwtService {	
+	@Value("${app.jwt.secret}")
+	private String SECRET;
+	@Value("${app.jwt.expiration-ms}")
+	private long expirationTime;
+		
 	private Key signingKey;
 	
 	@PostConstruct
@@ -24,7 +29,7 @@ public class JwtService {
 		return Jwts.builder()
 				.setSubject(email)
 				.setIssuedAt(new Date())
-				.setExpiration(new Date(System.currentTimeMillis()+1000*60*60))
+				.setExpiration(new Date(System.currentTimeMillis()+expirationTime))
 				.signWith(signingKey, SignatureAlgorithm.HS256)
 				.compact();
 	}

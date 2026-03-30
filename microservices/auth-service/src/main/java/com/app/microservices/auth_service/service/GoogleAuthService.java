@@ -55,6 +55,8 @@ public class GoogleAuthService {
 	@Value("${spring.security.oauth2.client.registration.google.client-secret}")
 	private String clientSecret;
 	
+	@Value("${spring.security.oauth2.client.registration.google.redirect-uri}")
+    private String redirectUri;
 	
 	public AuthResponse handleGoogleAuth(String code) {
 		try {
@@ -68,7 +70,7 @@ public class GoogleAuthService {
 			params.add("code", code);
 			params.add("client_id", clientId);
 			params.add("client_secret", clientSecret);
-			params.add("redirect_uri", "https://developers.google.com/oauthplayground");
+			params.add("redirect_uri", redirectUri);
 			params.add("grant_type", "authorization_code");
 	
 			HttpHeaders headers = new HttpHeaders();
