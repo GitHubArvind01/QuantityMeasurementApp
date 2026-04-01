@@ -10,26 +10,19 @@ spring:
   application:
     name: AUTH-SERVICE
 
-
-  # H2 Database
+  # MySql
   datasource:
-    url: jdbc:h2:mem:authservice
-    driverClassName: org.h2.Driver
-    username: sa
-    password: 
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-
-  # JPA Settings
+    url: jdbc:mysql://${DB_HOST}:3306/authdb
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  #JPA
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
   # OAuth2 & Security
   security:
@@ -48,7 +41,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
   instance:
     prefer-ip-address: true
 
@@ -65,6 +58,6 @@ management:
   boot:
     admin:
       client:
-        url: http://localhost:9090
+        url: ${ADMIN_URL:http://localhost:9090}
         instance:
           prefer-ip: true
