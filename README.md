@@ -39,7 +39,8 @@ main
       ├── feature/UC15-NTierArchitectureRefactor
       ├── feature/UC16-JDBCPersistence
       ├── feature/UC17-SpringBackend
-      └── feature/UC18-GoogleAuthUserManagement
+      ├── feature/UC18-GoogleAuthUserManagement
+      └── feature/UC21-MicroservicesArchitecture
 ```
 
 ---
