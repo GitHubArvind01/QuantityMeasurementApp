@@ -1,7 +1,9 @@
 package com.app.quantitymeasurementapp.config;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,6 +28,9 @@ import lombok.AllArgsConstructor;
 public class SecurityConfig {
 	
 	private final JwtFilter jwtFilter;
+	
+	@Value("${app.cors.allowed-origins}")
+    private String allowedOrigins;
 	
 	@Bean
     RestTemplate restTemplate() {
@@ -57,7 +62,9 @@ public class SecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:8080", "http://127.0.0.1:5500"));
+		List<String> origins = Arrays.asList(allowedOrigins.split(","));
+		
+		configuration.setAllowedOrigins(origins);
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setAllowCredentials(true);
