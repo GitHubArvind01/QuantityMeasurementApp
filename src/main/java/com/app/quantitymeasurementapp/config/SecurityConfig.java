@@ -20,17 +20,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.app.quantitymeasurementapp.exception.JwtAuthenticationEntryPoint;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 	
-	private final JwtFilter jwtFilter;
 	
 	@Value("${app.cors.allowed-origins}")
     private String allowedOrigins;
+	
+	private final JwtFilter jwtFilter;
+	
+	public SecurityConfig(JwtFilter jwtFilter) {
+        this.jwtFilter = jwtFilter;
+    }
 	
 	@Bean
     RestTemplate restTemplate() {
